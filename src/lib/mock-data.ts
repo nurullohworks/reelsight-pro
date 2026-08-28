@@ -17,11 +17,11 @@ export function makeAnalysis(seed = 0, overrides: Partial<Analysis> = {}): Analy
 
   return {
     id: `an_${1000 + seed}`,
-    title: titles[seed % titles.length],
+    title: titles[seed % titles.length]!,
     fileName: `reel-${1000 + seed}.mp4`,
     createdAt: new Date(Date.now() - seed * 86400000 * 2).toISOString(),
     durationSec: 21,
-    status: (["Analyzed", "Published", "Tracking", "Completed"] as const)[seed % 4],
+    status: (["Analyzed", "Published", "Tracking", "Completed"] as const)[seed % 4]!,
     prediction: {
       overall_score: overall,
       viral_probability: Math.min(94, overall - 6),
