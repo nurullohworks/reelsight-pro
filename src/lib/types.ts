@@ -53,7 +53,7 @@ export interface Analysis {
   timeline: TimelineSegment[];
   recommendations: Recommendation[];
   benchmark: { metric: string; reel: number; accountAvg: number; benchmark: number }[];
-  actualViews?: number;
+  actualViews?: number | undefined;
   verdict: {
     state: "Ready to post" | "Ready with improvements" | "Needs work";
     summary: string;
