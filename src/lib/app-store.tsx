@@ -42,7 +42,7 @@ const defaultState: AppState = {
   subscription: {
     plan: "free",
     status: "active",
-    renewsAt: new Date(Date.now() + 21 * 86400000).toISOString(),
+    renewsAt: "2026-03-01T09:00:00.000Z",
     usedThisMonth: 1,
     monthlyLimit: PLAN_LIMITS.free,
     billingCycle: "monthly",

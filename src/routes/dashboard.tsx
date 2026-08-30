@@ -30,9 +30,13 @@ export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-function greeting() {
-  const h = new Date().getHours();
-  return h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+function useGreeting() {
+  const [greeting, setGreeting] = useState("Welcome back");
+  useEffect(() => {
+    const h = new Date().getHours();
+    setGreeting(h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening");
+  }, []);
+  return greeting;
 }
 
 function Dashboard() {
