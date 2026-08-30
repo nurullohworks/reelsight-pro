@@ -1,5 +1,8 @@
 import type { AccountSnapshot, Analysis } from "./types";
 
+// Fixed base date keeps mock timestamps identical on server and client (no hydration drift).
+const BASE_TIME = Date.parse("2026-02-02T09:00:00.000Z");
+
 const titles = [
   "3 hooks that stop the scroll",
   "Editing workflow in 20 seconds",
@@ -19,7 +22,7 @@ export function makeAnalysis(seed = 0, overrides: Partial<Analysis> = {}): Analy
     id: `an_${1000 + seed}`,
     title: titles[seed % titles.length]!,
     fileName: `reel-${1000 + seed}.mp4`,
-    createdAt: new Date(Date.now() - seed * 86400000 * 2).toISOString(),
+    createdAt: new Date(BASE_TIME - seed * 86400000 * 2).toISOString(),
     durationSec: 21,
     status: (["Analyzed", "Published", "Tracking", "Completed"] as const)[seed % 4]!,
     prediction: {

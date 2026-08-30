@@ -161,7 +161,7 @@ function Landing() {
                     <Cell label="Confidence" value="76%" />
                   </div>
                 </div>
-                <div className="grid gap-x-10 gap-y-5 sm:grid-cols-2">
+                <div className="grid content-start gap-x-10 gap-y-6 sm:grid-cols-2">
                   {heroMetrics.map((m) => (
                     <MetricBar key={m.label} label={m.label} score={m.score} suffix="%" />
                   ))}
