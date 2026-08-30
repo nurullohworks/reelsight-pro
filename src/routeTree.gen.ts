@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as AnalyzeRouteImport } from './routes/analyze'
+import { Route as BillingRouteImport } from './routes/billing'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ReportsIndexRouteImport } from './routes/reports.index'
 import { Route as ReportsIdRouteImport } from './routes/reports.$id'
@@ -33,6 +35,11 @@ const AccountsRoute = AccountsRouteImport.update({
 const AnalyzeRoute = AnalyzeRouteImport.update({
   id: '/analyze',
   path: '/analyze',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BillingRoute = BillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -55,6 +62,11 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -75,10 +87,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/analyze': typeof AnalyzeRoute
+  '/billing': typeof BillingRoute
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/reports/$id': typeof ReportsIdRoute
   '/reports/': typeof ReportsIndexRoute
@@ -87,10 +101,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/analyze': typeof AnalyzeRoute
+  '/billing': typeof BillingRoute
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/reports/$id': typeof ReportsIdRoute
   '/reports': typeof ReportsIndexRoute
@@ -100,10 +116,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
   '/analyze': typeof AnalyzeRoute
+  '/billing': typeof BillingRoute
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
+  '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/reports/$id': typeof ReportsIdRoute
   '/reports/': typeof ReportsIndexRoute
@@ -114,10 +132,12 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/analyze'
+    | '/billing'
     | '/dashboard'
     | '/history'
     | '/login'
     | '/pricing'
+    | '/settings'
     | '/signup'
     | '/reports/$id'
     | '/reports/'
@@ -126,10 +146,12 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/analyze'
+    | '/billing'
     | '/dashboard'
     | '/history'
     | '/login'
     | '/pricing'
+    | '/settings'
     | '/signup'
     | '/reports/$id'
     | '/reports'
@@ -138,10 +160,12 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/analyze'
+    | '/billing'
     | '/dashboard'
     | '/history'
     | '/login'
     | '/pricing'
+    | '/settings'
     | '/signup'
     | '/reports/$id'
     | '/reports/'
@@ -151,10 +175,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountsRoute: typeof AccountsRoute
   AnalyzeRoute: typeof AnalyzeRoute
+  BillingRoute: typeof BillingRoute
   DashboardRoute: typeof DashboardRoute
   HistoryRoute: typeof HistoryRoute
   LoginRoute: typeof LoginRoute
   PricingRoute: typeof PricingRoute
+  SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   ReportsIdRoute: typeof ReportsIdRoute
   ReportsIndexRoute: typeof ReportsIndexRoute
@@ -181,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/analyze'
       fullPath: '/analyze'
       preLoaderRoute: typeof AnalyzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/billing': {
+      id: '/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof BillingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -211,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -239,10 +279,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountsRoute: AccountsRoute,
   AnalyzeRoute: AnalyzeRoute,
+  BillingRoute: BillingRoute,
   DashboardRoute: DashboardRoute,
   HistoryRoute: HistoryRoute,
   LoginRoute: LoginRoute,
   PricingRoute: PricingRoute,
+  SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   ReportsIdRoute: ReportsIdRoute,
   ReportsIndexRoute: ReportsIndexRoute,
