@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Plus } from "lucide-react";
 import {
   Area,
@@ -41,6 +42,7 @@ function useGreeting() {
 
 function Dashboard() {
   const { analyses, user } = useAppStore();
+  const greet = useGreeting();
   const last = analyses[0];
   const avg = Math.round(
     analyses.reduce((a, x) => a + x.prediction.overall_score, 0) / Math.max(analyses.length, 1),
@@ -50,7 +52,7 @@ function Dashboard() {
     <AppShell>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold">{greeting()}{user ? `, ${user.name}` : ""}.</h1>
+          <h1 className="text-3xl font-semibold">{greet}{user ? `, ${user.name}` : ""}.</h1>
           <p className="mt-2 text-muted-foreground">What are you analyzing today?</p>
         </div>
         <Button asChild size="lg">
