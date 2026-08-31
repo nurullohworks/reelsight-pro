@@ -12,13 +12,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/analyze")({
   head: () => ({
     meta: [
-      { title: "Video Analyzer — REELPREDICT" },
+      { title: "Video tahlilchisi — REELPREDICT" },
       {
         name: "description",
-        content: "Upload a Reel and get an AI performance prediction, timeline analysis and fixes before you publish.",
+        content: "Reels yuklang va nashr etishdan oldin AI samaradorlik bashorati, vaqt jadvali tahlili va tavsiyalarni oling.",
       },
-      { property: "og:title", content: "Video Analyzer — REELPREDICT" },
-      { property: "og:description", content: "Drop your Reel and predict its performance before publishing." },
+      { property: "og:title", content: "Video tahlilchisi — REELPREDICT" },
+      { property: "og:description", content: "Reels-ingizni yuklang va nashr etishdan oldin uning samaradorligini bashorat qiling." },
     ],
   }),
   component: Analyze,
@@ -36,11 +36,11 @@ function Analyze() {
   const pick = (f: File | undefined) => {
     if (!f) return;
     if (!/\.(mp4|mov)$/i.test(f.name)) {
-      toast.error("Unsupported format", { description: "Upload an MP4 or MOV file." });
+      toast.error("Qo'llab-quvvatlanmaydigan format", { description: "MP4 yoki MOV faylini yuklang." });
       return;
     }
     if (f.size > 500 * 1024 * 1024) {
-      toast.error("File too large", { description: "Maximum size is 500MB." });
+      toast.error("Fayl juda katta", { description: "Maksimal hajm 500MB." });
       return;
     }
     setFile(f);
@@ -69,9 +69,9 @@ function Analyze() {
   return (
     <AppShell>
       <div className="mx-auto max-w-3xl">
-        <h1 className="text-3xl font-semibold">Video Analyzer</h1>
+        <h1 className="text-3xl font-semibold">Video tahlilchisi</h1>
         <p className="mt-2 text-muted-foreground">
-          Analyze a Reel before publishing. Nothing is posted to Instagram.
+          Nashr etishdan oldin Reels-ni tahlil qiling. Hech narsa Instagram-ga joylanmaydi.
         </p>
 
         {!running ? (
@@ -96,8 +96,8 @@ function Analyze() {
               <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-muted">
                 {file ? <Film className="h-6 w-6 text-primary" /> : <UploadCloud className="h-6 w-6 text-primary" />}
               </div>
-              <p className="mt-6 text-lg font-medium">{file ? file.name : "Drop your Reel here"}</p>
-              <p className="mt-2 text-xs text-muted-foreground">Supported: MP4, MOV · Maximum size: 500MB</p>
+              <p className="mt-6 text-lg font-medium">{file ? file.name : "Reels-ingizni shu yerga tashlang"}</p>
+              <p className="mt-2 text-xs text-muted-foreground">Qo'llab-quvvatlanadi: MP4, MOV · Maksimal hajm: 500MB</p>
               <input
                 ref={inputRef}
                 type="file"
@@ -108,18 +108,18 @@ function Analyze() {
             </div>
 
             <Button className="mt-6 w-full" size="lg" disabled={!file} onClick={() => void run()}>
-              Analyze Video
+              Videoni tahlil qilish
             </Button>
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Predictions are estimates based on available data and historical performance signals.
-              Actual results may vary.
+              Bashoratlar mavjud ma'lumotlar va tarixiy samaradorlik signallariga asoslangan taxminlardir.
+              Haqiqiy natijalar farq qilishi mumkin.
             </p>
           </>
         ) : (
           <div className="surface-card mt-8 p-8">
             <div className="flex items-center gap-3">
               <Loader2 className="h-4 w-4 animate-spin text-primary" />
-              <p className="text-sm text-muted-foreground">Analyzing {file?.name}</p>
+              <p className="text-sm text-muted-foreground">{file?.name} tahlil qilinmoqda</p>
             </div>
             <div className="mt-6 h-1 w-full overflow-hidden rounded-full bg-muted">
               <div

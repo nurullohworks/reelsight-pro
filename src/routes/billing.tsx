@@ -8,10 +8,10 @@ import { useAppStore } from "@/lib/app-store";
 export const Route = createFileRoute("/billing")({
   head: () => ({
     meta: [
-      { title: "Billing — REELPREDICT" },
-      { name: "description", content: "Manage your REELPREDICT plan, usage and renewal." },
-      { property: "og:title", content: "Billing — REELPREDICT" },
-      { property: "og:description", content: "Current plan, usage this month and subscription controls." },
+      { title: "Hisob-kitob — REELPREDICT" },
+      { name: "description", content: "REELPREDICT tarifingiz, foydalanishingiz va yangilanishingizni boshqaring." },
+      { property: "og:title", content: "Hisob-kitob — REELPREDICT" },
+      { property: "og:description", content: "Joriy tarif, shu oydagi foydalanish va obuna boshqaruvi." },
     ],
   }),
   component: Billing,
@@ -23,27 +23,27 @@ function Billing() {
 
   return (
     <AppShell>
-      <h1 className="text-3xl font-semibold">Billing</h1>
+      <h1 className="text-3xl font-semibold">Hisob-kitob</h1>
       <p className="mt-2 text-muted-foreground">
-        Subscription, usage and invoices. Checkout is simulated until payment keys are connected.
+        Obuna, foydalanish va hisob-fakturalar. To‘lov kalitlari ulanmaguncha to‘lov jarayoni simulyatsiya qilinadi.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Current plan" value={subscription.plan.toUpperCase()} hint={subscription.billingCycle} />
-        <StatCard label="Status" value={subscription.status} />
+        <StatCard label="Joriy tarif" value={subscription.plan.toUpperCase()} hint={subscription.billingCycle} />
+        <StatCard label="Holat" value={subscription.status} />
         <StatCard
-          label="Renewal date"
+          label="Yangilanish sanasi"
           value={new Date(subscription.renewsAt).toLocaleDateString()}
         />
         <StatCard
-          label="Usage this month"
+          label="Shu oydagi foydalanish"
           value={`${subscription.usedThisMonth}/${subscription.monthlyLimit}`}
-          hint={`${remaining} analyses remaining`}
+          hint={`${remaining} ta tahlil qoldi`}
         />
       </div>
 
       <div className="surface-card mt-6 p-6">
-        <h2 className="text-sm uppercase tracking-widest text-muted-foreground">Manage plan</h2>
+        <h2 className="text-sm uppercase tracking-widest text-muted-foreground">Tarifni boshqarish</h2>
         <div className="mt-6 h-2 w-full overflow-hidden rounded-full bg-muted">
           <div
             className="h-full rounded-full bg-primary"
@@ -56,22 +56,22 @@ function Billing() {
           <Button
             onClick={() => {
               setPlan(subscription.plan === "agency" ? "agency" : "pro");
-              toast.success("Plan upgraded");
+              toast.success("Tarif yangilandi");
             }}
           >
-            Upgrade
+            Tarifni oshirish
           </Button>
           <Button asChild variant="outline">
-            <Link to="/pricing">Change plan</Link>
+            <Link to="/pricing">Tarifni o‘zgartirish</Link>
           </Button>
           <Button
             variant="ghost"
             onClick={() => {
               cancelSubscription();
-              toast("Subscription canceled", { description: "Access remains until renewal date." });
+              toast("Obuna bekor qilindi", { description: "Kirish yangilanish sanasigacha saqlanadi." });
             }}
           >
-            Cancel subscription
+            Obunani bekor qilish
           </Button>
         </div>
       </div>

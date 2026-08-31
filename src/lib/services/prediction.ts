@@ -67,7 +67,7 @@ export function predictionAccuracy(analysis: Analysis) {
   const deviation = Math.abs(analysis.actualViews - mid) / mid;
   return {
     inRange,
-    label: inRange ? "High" : deviation < 0.5 ? "Medium" : "Low",
+    label: inRange ? "Yuqori" : deviation < 0.5 ? "O‘rta" : "Past",
     percent: Math.max(20, Math.round((1 - Math.min(deviation, 1)) * 100)),
   };
 }

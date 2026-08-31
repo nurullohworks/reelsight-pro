@@ -3,21 +3,21 @@ import { Logo } from "@/components/brand/Logo";
 
 const columns: { title: string; items: { label: string; to?: string }[] }[] = [
   {
-    title: "Product",
+    title: "Mahsulot",
     items: [
-      { label: "Features", to: "/" },
-      { label: "Pricing", to: "/pricing" },
-      { label: "Analyzer", to: "/analyze" },
-      { label: "Account Intelligence", to: "/accounts" },
+      { label: "Imkoniyatlar", to: "/" },
+      { label: "Narxlar", to: "/pricing" },
+      { label: "Tahlilchi", to: "/analyze" },
+      { label: "Hisob Intellekti", to: "/accounts" },
     ],
   },
   {
-    title: "Resources",
-    items: [{ label: "Documentation" }, { label: "Prediction methodology" }, { label: "Changelog" }],
+    title: "Resurslar",
+    items: [{ label: "Hujjatlar" }, { label: "Bashorat metodologiyasi" }, { label: "O'zgarishlar jurnali" }],
   },
   {
-    title: "Company",
-    items: [{ label: "Privacy" }, { label: "Terms" }, { label: "Contact" }],
+    title: "Kompaniya",
+    items: [{ label: "Maxfiylik" }, { label: "Shartlar" }, { label: "Aloqa" }],
   },
 ];
 
@@ -28,9 +28,9 @@ export function SiteFooter() {
         <div>
           <Logo withTagline />
           <p className="mt-5 max-w-xs text-xs leading-relaxed text-muted-foreground">
-            REELPREDICT is an AI prediction engine built on available Instagram data, publicly
-            documented ranking signals and historical account performance. It has no access to
-            Meta's private ranking algorithm.
+            REELPREDICT — mavjud Instagram ma'lumotlari, ommaviy hujjatlashtirilgan reyting
+            signallari va hisobning tarixiy samaradorligi asosida qurilgan AI bashorat tizimi.
+            U Meta'ning maxfiy reyting algoritmiga kirish huquqiga ega emas.
           </p>
         </div>
         {columns.map((col) => (
@@ -53,8 +53,8 @@ export function SiteFooter() {
         ))}
       </div>
       <div className="border-t border-border px-5 py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} REELPREDICT. Predictions are estimates based on available data
-        and historical performance signals. Actual results may vary.
+        © {new Date().getFullYear()} REELPREDICT. Bashoratlar mavjud ma'lumotlar va tarixiy
+        samaradorlik signallari asosidagi taxminlardir. Haqiqiy natijalar farq qilishi mumkin.
       </div>
     </footer>
   );

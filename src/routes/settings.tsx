@@ -10,10 +10,10 @@ import { useAppStore } from "@/lib/app-store";
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — REELPREDICT" },
-      { name: "description", content: "Profile, connected Instagram accounts, notifications and security." },
-      { property: "og:title", content: "Settings — REELPREDICT" },
-      { property: "og:description", content: "Manage your REELPREDICT workspace settings." },
+      { title: "Sozlamalar — REELPREDICT" },
+      { name: "description", content: "Profil, ulangan Instagram akkauntlari, bildirishnomalar va xavfsizlik." },
+      { property: "og:title", content: "Sozlamalar — REELPREDICT" },
+      { property: "og:description", content: "REELPREDICT ish maydoni sozlamalarini boshqaring." },
     ],
   }),
   component: Settings,
@@ -33,62 +33,62 @@ function Settings() {
 
   return (
     <AppShell>
-      <h1 className="text-3xl font-semibold">Settings</h1>
+      <h1 className="text-3xl font-semibold">Sozlamalar</h1>
 
       <div className="mt-8 grid gap-4 lg:grid-cols-2">
-        <Section title="Profile">
+        <Section title="Profil">
           <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
+            <Label htmlFor="name">Ism</Label>
             <Input id="name" defaultValue={user?.name ?? ""} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input id="email" defaultValue={user?.email ?? ""} />
           </div>
-          <Button onClick={() => toast.success("Profile saved")}>Save changes</Button>
+          <Button onClick={() => toast.success("Profil saqlandi")}>O‘zgarishlarni saqlash</Button>
         </Section>
 
-        <Section title="Connected Instagram accounts">
+        <Section title="Ulangan Instagram akkauntlari">
           <div className="flex items-center justify-between rounded-lg border border-border bg-background/40 p-4">
             <div>
               <p className="text-sm font-medium">@yourstudio</p>
               <p className="text-xs text-muted-foreground">
-                Status: {instagramConnected ? "Connected" : "Not connected"}
+                Holat: {instagramConnected ? "Ulangan" : "Ulanmagan"}
               </p>
             </div>
             <Button variant={instagramConnected ? "outline" : "default"} onClick={toggleInstagram}>
-              {instagramConnected ? "Disconnect" : "Connect Instagram Account"}
+              {instagramConnected ? "Uzish" : "Instagram akkauntini ulash"}
             </Button>
           </div>
           <p className="text-xs text-muted-foreground">
-            Access tokens are stored server-side and are never exposed in the interface.
+            Kirish tokenlari server tomonida saqlanadi va interfeysda hech qachon ko‘rsatilmaydi.
           </p>
         </Section>
 
-        <Section title="Notifications">
-          <Row label="Analysis completed" defaultChecked />
-          <Row label="Weekly performance digest" defaultChecked />
-          <Row label="Prediction accuracy updates" />
+        <Section title="Bildirishnomalar">
+          <Row label="Tahlil yakunlandi" defaultChecked />
+          <Row label="Haftalik samaradorlik hisobotlari" defaultChecked />
+          <Row label="Bashorat aniqligi yangilanishlari" />
         </Section>
 
-        <Section title="Subscription">
+        <Section title="Obuna">
           <p className="text-sm text-muted-foreground">
-            Current plan: <span className="text-foreground">{subscription.plan.toUpperCase()}</span> ·{" "}
-            {subscription.usedThisMonth}/{subscription.monthlyLimit} analyses used
+            Joriy tarif: <span className="text-foreground">{subscription.plan.toUpperCase()}</span> ·{" "}
+            {subscription.usedThisMonth}/{subscription.monthlyLimit} ta tahlil ishlatilgan
           </p>
           <Button asChild variant="outline">
-            <Link to="/billing">Manage billing</Link>
+            <Link to="/billing">Hisob-kitobni boshqarish</Link>
           </Button>
         </Section>
 
-        <Section title="Security">
+        <Section title="Xavfsizlik">
           <div className="space-y-2">
-            <Label htmlFor="pw">New password</Label>
+            <Label htmlFor="pw">Yangi parol</Label>
             <Input id="pw" type="password" placeholder="••••••••" />
           </div>
-          <Row label="Two-factor authentication" />
-          <Button variant="outline" onClick={() => toast.success("Security settings updated")}>
-            Update security
+          <Row label="Ikki bosqichli autentifikatsiya" />
+          <Button variant="outline" onClick={() => toast.success("Xavfsizlik sozlamalari yangilandi")}>
+            Xavfsizlikni yangilash
           </Button>
         </Section>
       </div>

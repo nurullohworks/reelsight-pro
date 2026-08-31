@@ -31,11 +31,11 @@ export const mockVideoAnalysisService: VideoAnalysisService = {
 export const videoAnalysisService: VideoAnalysisService = mockVideoAnalysisService;
 
 export const ANALYSIS_STEPS = [
-  "Video processing",
-  "Visual analysis",
-  "Audio analysis",
-  "Content understanding",
-  "Account comparison",
-  "Performance prediction",
-  "Report generation",
+  "Video qayta ishlanmoqda",
+  "Vizual tahlil",
+  "Audio tahlil",
+  "Kontentni tushunish",
+  "Akkaunt bilan solishtirish",
+  "Samaradorlikni bashorat qilish",
+  "Hisobot yaratish",
 ];

@@ -12,16 +12,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — REELPREDICT" },
+      { title: "Narxlar — REELPREDICT" },
       {
         name: "description",
         content:
-          "Simple pricing for Instagram performance intelligence: Free, Pro at $29/month and Agency at $79/month with team access and white-label reports.",
+          "Instagram samaradorlik tahlili uchun oddiy narxlar: Bepul, Pro — $29/oy va Agency — $79/oy, jamoaviy kirish va oq nishonli hisobotlar bilan.",
       },
-      { property: "og:title", content: "REELPREDICT Pricing" },
+      { property: "og:title", content: "REELPREDICT Narxlari" },
       {
         property: "og:description",
-        content: "Free, Pro and Agency plans for AI-powered Reels performance prediction.",
+        content: "AI asosidagi Reels samaradorligini bashorat qilish uchun Bepul, Pro va Agency tariflari.",
       },
     ],
   }),
@@ -38,41 +38,41 @@ const plans: {
 }[] = [
   {
     id: "free",
-    name: "Free",
+    name: "Bepul",
     monthly: 0,
-    cta: "Start Free",
-    features: ["2 analyses / month", "Basic report", "Basic account analysis", "Limited history"],
+    cta: "Bepul Boshlash",
+    features: ["Oyiga 2 ta tahlil", "Asosiy hisobot", "Asosiy hisob tahlili", "Cheklangan tarix"],
   },
   {
     id: "pro",
     name: "Pro",
     monthly: 29,
-    cta: "Upgrade to Pro",
+    cta: "Pro'ga O'tish",
     popular: true,
     features: [
-      "100 video analyses",
-      "Advanced AI analysis",
-      "Account intelligence",
-      "Performance prediction",
-      "Detailed recommendations",
-      "Analysis history",
-      "Prediction tracking",
-      "Priority processing",
+      "100 ta video tahlili",
+      "Ilg'or AI tahlili",
+      "Hisob intellekti",
+      "Samaradorlik bashorati",
+      "Batafsil tavsiyalar",
+      "Tahlil tarixi",
+      "Bashorat kuzatuvi",
+      "Ustuvor qayta ishlash",
     ],
   },
   {
     id: "agency",
     name: "Agency",
     monthly: 79,
-    cta: "Start Agency",
+    cta: "Agency'ni Boshlash",
     features: [
-      "Multiple Instagram accounts",
-      "High analysis limits",
-      "Team access",
-      "Client reports",
-      "White-label reports",
-      "Advanced analytics",
-      "Priority processing",
+      "Bir nechta Instagram hisoblari",
+      "Yuqori tahlil chegaralari",
+      "Jamoaviy kirish",
+      "Mijoz hisobotlari",
+      "Oq nishonli hisobotlar",
+      "Ilg'or tahlillar",
+      "Ustuvor qayta ishlash",
     ],
   },
 ];
@@ -88,8 +88,8 @@ function Pricing() {
       return;
     }
     setPlan(id, yearly ? "yearly" : "monthly");
-    toast.success(`${id === "free" ? "Free" : id === "pro" ? "Pro" : "Agency"} plan activated`, {
-      description: "Checkout is simulated in this prototype until Stripe keys are connected.",
+    toast.success(`${id === "free" ? "Bepul" : id === "pro" ? "Pro" : "Agency"} tarifi faollashtirildi`, {
+      description: "Stripe kalitlari ulanguncha to'lov ushbu prototipda simulyatsiya qilinadi.",
     });
     void navigate({ to: "/billing" });
   };
@@ -100,9 +100,9 @@ function Pricing() {
       <section className="border-b border-border py-20">
         <div className="mx-auto max-w-6xl px-5">
           <div className="text-center">
-            <h1 className="text-4xl font-semibold md:text-5xl">Pricing built for output.</h1>
+            <h1 className="text-4xl font-semibold md:text-5xl">Natija uchun mo'ljallangan narxlar.</h1>
             <p className="mt-4 text-sm text-muted-foreground">
-              Every plan includes the full prediction engine. Volume and collaboration scale up.
+              Har bir tarif to'liq bashorat tizimini o'z ichiga oladi. Hajm va hamkorlik kengaytiriladi.
             </p>
             <div className="mt-8 inline-flex items-center gap-1 rounded-full border border-border bg-surface p-1 text-sm">
               <button
@@ -112,7 +112,7 @@ function Pricing() {
                   !yearly ? "bg-muted text-foreground" : "text-muted-foreground",
                 )}
               >
-                Monthly
+                Oylik
               </button>
               <button
                 onClick={() => setYearly(true)}
@@ -121,7 +121,7 @@ function Pricing() {
                   yearly ? "bg-muted text-foreground" : "text-muted-foreground",
                 )}
               >
-                Yearly · save 20%
+                Yillik · 20% tejang
               </button>
             </div>
           </div>
@@ -139,7 +139,7 @@ function Pricing() {
                 >
                   {plan.popular ? (
                     <span className="absolute -top-3 left-7 rounded-full bg-primary px-3 py-1 text-[10px] uppercase tracking-widest text-primary-foreground">
-                      Most popular
+                      Eng ommabop
                     </span>
                   ) : null}
                   <h2 className="text-sm uppercase tracking-widest text-muted-foreground">
@@ -147,11 +147,11 @@ function Pricing() {
                   </h2>
                   <div className="mt-4 flex items-baseline gap-1">
                     <span className="text-4xl font-semibold">${price}</span>
-                    <span className="text-sm text-muted-foreground">/month</span>
+                    <span className="text-sm text-muted-foreground">/oy</span>
                   </div>
                   {yearly && plan.monthly > 0 ? (
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Billed ${price * 12} yearly
+                      Yiliga ${price * 12} hisoblanadi
                     </p>
                   ) : null}
                   <ul className="mt-6 flex-1 space-y-3 text-sm">
@@ -174,8 +174,8 @@ function Pricing() {
             })}
           </div>
           <p className="mt-8 text-center text-xs text-muted-foreground">
-            Predictions are estimates based on available data and historical performance signals.
-            Actual results may vary.
+            Bashoratlar mavjud ma'lumotlar va tarixiy samaradorlik signallari asosidagi taxminlardir.
+            Haqiqiy natijalar farq qilishi mumkin.
           </p>
         </div>
       </section>

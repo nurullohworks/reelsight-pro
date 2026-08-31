@@ -17,7 +17,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
-      toast.error("Enter your email and password");
+      toast.error("Email va parolni kiriting");
       return;
     }
     setLoading(true);
@@ -35,14 +35,14 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-25" />
         <Logo className="relative" />
         <div className="relative">
-          <h2 className="max-w-sm text-4xl font-semibold leading-tight">Know before you post.</h2>
+          <h2 className="max-w-sm text-4xl font-semibold leading-tight">Joylashdan oldin biling.</h2>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-            Prediction scores, timeline analysis and prioritized recommendations for every Reel —
-            before it reaches your audience.
+            Har bir Reels uchun bashorat ballari, vaqt jadvali tahlili va ustuvorlashtirilgan
+            tavsiyalar — auditoriyangizga yetib borishidan oldin.
           </p>
         </div>
         <p className="relative text-xs text-muted-foreground">
-          Predictions are estimates. REELPREDICT has no access to Meta's private ranking algorithm.
+          Bashoratlar taxminiy hisoblanadi. REELPREDICT Meta'ning maxfiy reyting algoritmiga kirish huquqiga ega emas.
         </p>
       </div>
 
@@ -52,26 +52,26 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
             <Logo />
           </div>
           <h1 className="mt-8 text-2xl font-semibold lg:mt-0">
-            {mode === "login" ? "Log in" : "Create account"}
+            {mode === "login" ? "Kirish" : "Hisob yaratish"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {mode === "login"
-              ? "Continue to your intelligence workspace."
-              : "Start with 2 free analyses per month."}
+              ? "Intellekt ish maydoningizga davom eting."
+              : "Oyiga 2 ta bepul tahlil bilan boshlang."}
           </p>
 
           <Button
             variant="outline"
             className="mt-7 w-full"
             onClick={() =>
-              toast.info("Google sign-in becomes available once the backend is connected.")
+              toast.info("Google orqali kirish backend ulangandan so'ng mavjud bo'ladi.")
             }
           >
-            Continue with Google
+            Google bilan davom etish
           </Button>
 
           <div className="my-6 flex items-center gap-3 text-[11px] uppercase tracking-widest text-muted-foreground">
-            <span className="h-px flex-1 bg-border" /> or <span className="h-px flex-1 bg-border" />
+            <span className="h-px flex-1 bg-border" /> yoki <span className="h-px flex-1 bg-border" />
           </div>
 
           <form onSubmit={submit} className="space-y-4">
@@ -82,11 +82,11 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@studio.com"
+                placeholder="siz@studio.com"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">Parol</Label>
               <Input
                 id="password"
                 type="password"
@@ -96,23 +96,23 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in…" : mode === "login" ? "Login" : "Create account"}
+              {loading ? "Kirilmoqda…" : mode === "login" ? "Kirish" : "Hisob yaratish"}
             </Button>
           </form>
 
           <p className="mt-6 text-sm text-muted-foreground">
             {mode === "login" ? (
               <>
-                No account?{" "}
+                Hisobingiz yo'qmi?{" "}
                 <Link to="/signup" className="text-primary hover:underline">
-                  Create account
+                  Hisob yaratish
                 </Link>
               </>
             ) : (
               <>
-                Already have an account?{" "}
+                Hisobingiz bormi?{" "}
                 <Link to="/login" className="text-primary hover:underline">
-                  Login
+                  Kirish
                 </Link>
               </>
             )}

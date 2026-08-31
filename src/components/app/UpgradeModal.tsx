@@ -19,9 +19,10 @@ export function UpgradeModal({
         <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted">
           <Sparkles className="h-5 w-5 text-primary" />
         </div>
-        <DialogTitle className="text-xl">You've reached your monthly analysis limit.</DialogTitle>
+        <DialogTitle className="text-xl">Oylik tahlil limitingizga yetdingiz.</DialogTitle>
         <DialogDescription className="text-sm leading-relaxed">
-          Upgrade to continue analyzing Reels and unlock advanced performance intelligence.
+          Reels-larni tahlil qilishni davom ettirish va ilg'or samaradorlik tahlillarini ochish uchun
+          tarifni yangilang.
         </DialogDescription>
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <Button
@@ -31,10 +32,10 @@ export function UpgradeModal({
               onOpenChange(false);
             }}
           >
-            Upgrade to Pro
+            Pro tarifiga o'tish
           </Button>
           <Button asChild variant="outline" className="flex-1">
-            <Link to="/pricing">View Plans</Link>
+            <Link to="/pricing">Tariflarni ko'rish</Link>
           </Button>
         </div>
       </DialogContent>

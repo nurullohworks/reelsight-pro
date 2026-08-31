@@ -18,17 +18,17 @@ import { ScoreRing } from "@/components/data/ScoreRing";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "REELPREDICT — Predict Instagram Reels performance with AI" },
+      { title: "REELPREDICT — Instagram Reels samaradorligini AI yordamida bashorat qiling" },
       {
         name: "description",
         content:
-          "Upload a Reel or connect your Instagram account. REELPREDICT estimates performance, finds weaknesses and shows exactly what to improve before you post.",
+          "Reels videongizni yuklang yoki Instagram hisobingizni ulang. REELPREDICT samaradorlikni baholaydi, zaif tomonlarni topadi va joylashtirishdan oldin nimani yaxshilash kerakligini aniq ko'rsatadi.",
       },
-      { property: "og:title", content: "REELPREDICT — Know before you post" },
+      { property: "og:title", content: "REELPREDICT — Joylashdan oldin biling" },
       {
         property: "og:description",
         content:
-          "AI-powered Instagram performance intelligence: prediction scores, timeline analysis and recommendations before publishing.",
+          "AI asosidagi Instagram samaradorlik tahlili: bashorat ballari, vaqt jadvali tahlili va joylashtirishdan oldingi tavsiyalar.",
       },
     ],
   }),
@@ -36,68 +36,68 @@ export const Route = createFileRoute("/")({
 });
 
 const heroMetrics = [
-  { label: "Hook", score: 91 },
-  { label: "Retention", score: 78 },
-  { label: "Engagement", score: 84 },
-  { label: "Visual Quality", score: 88 },
+  { label: "Ilgak (Hook)", score: 91 },
+  { label: "Ushlab turish", score: 78 },
+  { label: "Faollik", score: 84 },
+  { label: "Vizual sifat", score: 88 },
   { label: "CTA", score: 63 },
-  { label: "Audience Fit", score: 86 },
+  { label: "Auditoriyaga mosligi", score: 86 },
 ];
 
-const audiences = ["Creators", "SMM Specialists", "Influencers", "Agencies", "Brands", "Content Teams"];
+const audiences = ["Kontent yaratuvchilar", "SMM mutaxassislari", "Influencerlar", "Agentliklar", "Brendlar", "Kontent jamoalari"];
 
 const steps = [
-  { n: "01", title: "Upload", body: "Upload your Reel or connect your Instagram account." },
-  { n: "02", title: "Analyze", body: "AI analyzes the video, account and available performance signals." },
+  { n: "01", title: "Yuklash", body: "Reels videongizni yuklang yoki Instagram hisobingizni ulang." },
+  { n: "02", title: "Tahlil qilish", body: "AI videoni, hisobni va mavjud samaradorlik signallarini tahlil qiladi." },
   {
     n: "03",
-    title: "Predict",
-    body: "The prediction engine estimates potential performance and identifies risk factors.",
+    title: "Bashorat qilish",
+    body: "Bashorat tizimi potensial samaradorlikni baholaydi va xavf omillarini aniqlaydi.",
   },
-  { n: "04", title: "Improve", body: "Get specific recommendations before publishing." },
+  { n: "04", title: "Yaxshilash", body: "Joylashtirishdan oldin aniq tavsiyalar oling." },
 ];
 
 const featureGroups = [
   {
     icon: Sparkles,
-    title: "Content analysis",
+    title: "Kontent tahlili",
     items: [
-      "Hook strength",
-      "Storytelling",
-      "Pacing",
-      "Scene changes",
-      "Visual quality",
+      "Ilgak kuchi",
+      "Hikoya qilish",
+      "Ritm",
+      "Sahna almashinuvi",
+      "Vizual sifat",
       "Audio",
-      "Text overlays",
+      "Matn qoplamalari",
       "CTA",
-      "Topic clarity",
+      "Mavzu aniqligi",
     ],
   },
   {
     icon: Activity,
-    title: "Performance signals",
+    title: "Samaradorlik signallari",
     items: [
-      "Historical views",
-      "Engagement rate",
-      "Shares",
-      "Saves",
-      "Comments",
-      "Reach",
-      "Audience response",
-      "Account growth",
+      "Tarixiy ko'rishlar",
+      "Faollik darajasi",
+      "Ulashishlar",
+      "Saqlanganlar",
+      "Izohlar",
+      "Qamrov",
+      "Auditoriya munosabati",
+      "Hisob o'sishi",
     ],
   },
   {
     icon: Gauge,
-    title: "Prediction",
+    title: "Bashorat",
     items: [
-      "Performance score",
-      "Viral potential",
-      "Estimated view range",
-      "Confidence score",
-      "Strengths",
-      "Weaknesses",
-      "Risk factors",
+      "Samaradorlik balli",
+      "Viral bo'lish salohiyati",
+      "Taxminiy ko'rishlar oralig'i",
+      "Ishonch darajasi",
+      "Kuchli tomonlar",
+      "Zaif tomonlar",
+      "Xavf omillari",
     ],
   },
 ];
@@ -113,27 +113,28 @@ function Landing() {
         <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-20 md:pt-28">
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground">
-              <Zap className="h-3 w-3 text-primary" /> AI prediction engine
+              <Zap className="h-3 w-3 text-primary" /> AI bashorat tizimi
             </span>
             <h1 className="mt-6 text-5xl font-semibold leading-[1.05] md:text-7xl">
-              Know Before You Post.
+              Joylashdan Oldin Biling.
             </h1>
             <p className="mt-5 text-lg text-foreground/80 md:text-xl">
-              Predict how your Instagram content could perform before it goes live.
+              Instagram kontentingiz e'lon qilinishidan oldin qanday natija berishini bashorat qiling.
             </p>
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Upload a Reel or connect your Instagram account. Our AI analyzes your content, account
-              performance and available ranking signals to estimate performance, identify weaknesses
-              and show you exactly what to improve.
+              Reels videongizni yuklang yoki Instagram hisobingizni ulang. Bizning AI tizimimiz
+              kontentingizni, hisob samaradorligini va mavjud reyting signallarini tahlil qilib,
+              samaradorlikni baholaydi, zaif tomonlarni aniqlaydi va aynan nimani yaxshilash
+              kerakligini ko'rsatadi.
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button asChild size="lg">
                 <Link to="/analyze">
-                  Analyze Your First Reel <ArrowRight className="ml-1 h-4 w-4" />
+                  Birinchi Reelsni Tahlil Qiling <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href="#how-it-works">See How It Works</a>
+                <a href="#how-it-works">Qanday Ishlashini Ko'ring</a>
               </Button>
             </div>
           </div>
@@ -143,12 +144,12 @@ function Landing() {
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-5">
                 <div>
                   <p className="text-[11px] uppercase tracking-widest text-muted-foreground">
-                    Video performance score
+                    Video samaradorlik balli
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">reel-launch-teaser.mp4 · 21s</p>
                 </div>
                 <span className="rounded-full border border-border bg-muted px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground">
-                  Prediction · estimate
+                  Bashorat · taxmin
                 </span>
               </div>
 
@@ -156,9 +157,9 @@ function Landing() {
                 <div className="flex flex-col items-center gap-4">
                   <ScoreRing score={82} />
                   <div className="grid w-full grid-cols-3 gap-2 text-center md:grid-cols-1">
-                    <Cell label="Viral potential" value="High" />
-                    <Cell label="Estimated views" value="18K – 42K" />
-                    <Cell label="Confidence" value="76%" />
+                    <Cell label="Viral salohiyat" value="Yuqori" />
+                    <Cell label="Taxminiy ko'rishlar" value="18K – 42K" />
+                    <Cell label="Ishonch darajasi" value="76%" />
                   </div>
                 </div>
                 <div className="grid content-start gap-x-10 gap-y-6 sm:grid-cols-2">
@@ -175,7 +176,7 @@ function Landing() {
       <section className="border-b border-border py-16">
         <div className="mx-auto max-w-6xl px-5 text-center">
           <h2 className="text-2xl font-semibold md:text-3xl">
-            Built for people who take content performance seriously.
+            Kontent samaradorligini jiddiy qabul qiladiganlar uchun yaratilgan.
           </h2>
           <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-6">
             {audiences.map((a) => (
@@ -192,9 +193,9 @@ function Landing() {
 
       <section id="how-it-works" className="border-b border-border py-20">
         <div className="mx-auto max-w-6xl px-5">
-          <h2 className="text-3xl font-semibold md:text-4xl">How it works</h2>
+          <h2 className="text-3xl font-semibold md:text-4xl">Qanday ishlaydi</h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            UPLOAD → ANALYZE → PREDICT → OPTIMIZE
+            YUKLASH → TAHLIL QILISH → BASHORAT QILISH → OPTIMALLASHTIRISH
           </p>
           <div className="mt-10 grid gap-4 md:grid-cols-4">
             {steps.map((s) => (
@@ -211,7 +212,7 @@ function Landing() {
       <section className="border-b border-border py-20">
         <div className="mx-auto max-w-6xl px-5">
           <h2 className="max-w-2xl text-3xl font-semibold md:text-4xl">
-            One Reel. Hundreds of signals. One clear decision.
+            Bitta Reels. Yuzlab signallar. Bitta aniq qaror.
           </h2>
           <div className="mt-10 grid gap-4 lg:grid-cols-3">
             {featureGroups.map((g) => (
@@ -240,34 +241,34 @@ function Landing() {
         <div className="mx-auto grid max-w-6xl gap-8 px-5 md:grid-cols-3">
           <Highlight
             icon={<ShieldCheck className="h-4 w-4 text-primary" />}
-            title="Transparent methodology"
-            body="We do not claim access to Meta's private ranking algorithm. Predictions are modelled from available Instagram data, publicly documented ranking signals and your historical performance."
+            title="Shaffof metodologiya"
+            body="Biz Meta'ning maxfiy reyting algoritmiga kirish huquqimiz borligini da'vo qilmaymiz. Bashoratlar mavjud Instagram ma'lumotlari, ommaviy hujjatlashtirilgan reyting signallari va sizning tarixiy samaradorligingiz asosida modellashtiriladi."
           />
           <Highlight
             icon={<BarChart3 className="h-4 w-4 text-primary" />}
-            title="Accuracy you can audit"
-            body="Log actual results after publishing. Every prediction is scored against reality and tracked over time."
+            title="Tekshirilishi mumkin bo'lgan aniqlik"
+            body="Nashr qilingandan so'ng haqiqiy natijalarni qayd eting. Har bir bashorat haqiqat bilan solishtirilib baholanadi va vaqt o'tishi bilan kuzatiladi."
           />
           <Highlight
             icon={<Upload className="h-4 w-4 text-primary" />}
-            title="Fits your workflow"
-            body="Analyze drafts before publishing, benchmark against your own account average and export client-ready reports."
+            title="Ish jarayoningizga mos keladi"
+            body="Nashr qilishdan oldin qoralamalarni tahlil qiling, o'z hisobingiz o'rtacha ko'rsatkichi bilan solishtiring va mijozlar uchun tayyor hisobotlarni eksport qiling."
           />
         </div>
       </section>
 
       <section className="py-24">
         <div className="mx-auto max-w-3xl px-5 text-center">
-          <h2 className="text-4xl font-semibold md:text-5xl">Stop guessing. Start analyzing.</h2>
+          <h2 className="text-4xl font-semibold md:text-5xl">Taxmin qilishni to'xtating. Tahlil qilishni boshlang.</h2>
           <p className="mt-4 text-muted-foreground">
-            Know what your content is doing before your audience does.
+            Auditoriyangizdan oldin kontentingiz nima qilayotganini biling.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg">
-              <Link to="/analyze">Analyze Your First Reel</Link>
+              <Link to="/analyze">Birinchi Reelsni Tahlil Qiling</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link to="/pricing">Explore Pro</Link>
+              <Link to="/pricing">Pro'ni Ko'rib Chiqing</Link>
             </Button>
           </div>
         </div>

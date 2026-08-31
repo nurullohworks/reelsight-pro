@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/lib/app-store";
 
 const links = [
-  { to: "/pricing", label: "Pricing" },
-  { to: "/accounts", label: "Account Intelligence" },
-  { to: "/analyze", label: "Analyzer" },
+  { to: "/pricing", label: "Narxlar" },
+  { to: "/accounts", label: "Hisob Intellekti" },
+  { to: "/analyze", label: "Tahlilchi" },
 ] as const;
 
 export function SiteHeader() {
@@ -26,15 +26,15 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           {hydrated && user ? (
             <Button asChild size="sm">
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="/dashboard">Boshqaruv paneli</Link>
             </Button>
           ) : (
             <>
               <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-                <Link to="/login">Log in</Link>
+                <Link to="/login">Kirish</Link>
               </Button>
               <Button asChild size="sm">
-                <Link to="/signup">Get started</Link>
+                <Link to="/signup">Boshlash</Link>
               </Button>
             </>
           )}

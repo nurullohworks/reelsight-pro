@@ -17,19 +17,26 @@ import type { AnalysisStatus } from "@/lib/types";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Analysis history — REELPREDICT" },
+      { title: "Tahlillar tarixi — REELPREDICT" },
       {
         name: "description",
-        content: "Every analyzed Reel with score, estimated views, actual views and prediction accuracy.",
+        content: "Har bir tahlil qilingan Reels — ball, taxminiy ko'rishlar, haqiqiy ko'rishlar va bashorat aniqligi bilan.",
       },
-      { property: "og:title", content: "Analysis history — REELPREDICT" },
-      { property: "og:description", content: "Search, filter and audit your past Reel predictions." },
+      { property: "og:title", content: "Tahlillar tarixi — REELPREDICT" },
+      { property: "og:description", content: "O'tgan Reels bashoratlaringizni qidiring, saralang va tekshiring." },
     ],
   }),
   component: History,
 });
 
 const statuses: (AnalysisStatus | "all")[] = ["all", "Analyzed", "Published", "Tracking", "Completed"];
+
+const statusLabels: Record<string, string> = {
+  Analyzed: "Tahlil qilingan",
+  Published: "Nashr etilgan",
+  Tracking: "Kuzatilmoqda",
+  Completed: "Yakunlangan",
+};
 
 function History() {
   const { analyses } = useAppStore();
@@ -49,9 +56,9 @@ function History() {
 
   return (
     <AppShell>
-      <h1 className="text-3xl font-semibold">Analysis history</h1>
+      <h1 className="text-3xl font-semibold">Tahlillar tarixi</h1>
       <p className="mt-2 text-muted-foreground">
-        Every analysis, with predicted vs actual performance.
+        Har bir tahlil, bashorat qilingan va haqiqiy samaradorlik bilan.
       </p>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -60,29 +67,29 @@ function History() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search analyses"
+            placeholder="Tahlillarni qidirish"
             className="pl-9"
           />
         </div>
         <Select value={status} onValueChange={setStatus}>
           <SelectTrigger className="sm:w-44">
-            <SelectValue placeholder="Status" />
+            <SelectValue placeholder="Holat" />
           </SelectTrigger>
           <SelectContent>
             {statuses.map((s) => (
               <SelectItem key={s} value={s}>
-                {s === "all" ? "All statuses" : s}
+                {s === "all" ? "Barcha holatlar" : statusLabels[s] ?? s}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
         <Select value={sort} onValueChange={setSort}>
           <SelectTrigger className="sm:w-44">
-            <SelectValue placeholder="Sort" />
+            <SelectValue placeholder="Saralash" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="recent">Most recent</SelectItem>
-            <SelectItem value="score">Highest score</SelectItem>
+            <SelectItem value="recent">Eng so'nggi</SelectItem>
+            <SelectItem value="score">Eng yuqori ball</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -92,12 +99,12 @@ function History() {
           <thead>
             <tr className="border-b border-border text-left text-[11px] uppercase tracking-widest text-muted-foreground">
               <th className="px-5 py-4 font-normal">Video</th>
-              <th className="px-5 py-4 font-normal">Date</th>
-              <th className="px-5 py-4 font-normal">Score</th>
-              <th className="px-5 py-4 font-normal">Estimated views</th>
-              <th className="px-5 py-4 font-normal">Actual views</th>
-              <th className="px-5 py-4 font-normal">Accuracy</th>
-              <th className="px-5 py-4 font-normal">Status</th>
+              <th className="px-5 py-4 font-normal">Sana</th>
+              <th className="px-5 py-4 font-normal">Ball</th>
+              <th className="px-5 py-4 font-normal">Taxminiy ko'rishlar</th>
+              <th className="px-5 py-4 font-normal">Haqiqiy ko'rishlar</th>
+              <th className="px-5 py-4 font-normal">Aniqlik</th>
+              <th className="px-5 py-4 font-normal">Holat</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -124,7 +131,7 @@ function History() {
                   <td className="px-5 py-4">{acc ? acc.label : "—"}</td>
                   <td className="px-5 py-4">
                     <span className="rounded-full border border-border px-2.5 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">
-                      {a.status}
+                      {statusLabels[a.status] ?? a.status}
                     </span>
                   </td>
                 </tr>
