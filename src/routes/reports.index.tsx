@@ -6,10 +6,10 @@ import { formatNumber, useAppStore } from "@/lib/app-store";
 export const Route = createFileRoute("/reports/")({
   head: () => ({
     meta: [
-      { title: "Reports — REELPREDICT" },
-      { name: "description", content: "All generated Reel performance reports in your workspace." },
-      { property: "og:title", content: "Reports — REELPREDICT" },
-      { property: "og:description", content: "Browse and export your AI performance reports." },
+      { title: "Hisobotlar — REELPREDICT" },
+      { name: "description", content: "Ish maydoningizdagi barcha yaratilgan Reel samaradorlik hisobotlari." },
+      { property: "og:title", content: "Hisobotlar — REELPREDICT" },
+      { property: "og:description", content: "AI samaradorlik hisobotlaringizni ko‘ring va eksport qiling." },
     ],
   }),
   component: Reports,
@@ -19,8 +19,8 @@ function Reports() {
   const { analyses } = useAppStore();
   return (
     <AppShell>
-      <h1 className="text-3xl font-semibold">Reports</h1>
-      <p className="mt-2 text-muted-foreground">Exportable AI performance reports.</p>
+      <h1 className="text-3xl font-semibold">Hisobotlar</h1>
+      <p className="mt-2 text-muted-foreground">Eksport qilinadigan AI samaradorlik hisobotlari.</p>
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {analyses.map((a) => (
           <Link

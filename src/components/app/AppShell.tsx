@@ -15,11 +15,11 @@ import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/lib/app-store";
 
 const nav = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/analyze", label: "Analyze", icon: Upload },
-  { to: "/accounts", label: "Accounts", icon: BarChart3 },
-  { to: "/history", label: "History", icon: History },
-  { to: "/reports", label: "Reports", icon: FileText },
+  { to: "/dashboard", label: "Boshqaruv paneli", icon: LayoutDashboard },
+  { to: "/analyze", label: "Tahlil qilish", icon: Upload },
+  { to: "/accounts", label: "Akkauntlar", icon: BarChart3 },
+  { to: "/history", label: "Tarix", icon: History },
+  { to: "/reports", label: "Hisobotlar", icon: FileText },
 ] as const;
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -31,12 +31,12 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex min-h-screen items-center justify-center px-5">
         <div className="surface-card max-w-sm p-8 text-center">
           <Logo className="justify-center" />
-          <h1 className="mt-6 text-lg font-semibold">Sign in to continue</h1>
+          <h1 className="mt-6 text-lg font-semibold">Davom etish uchun tizimga kiring</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Your dashboard, analyses and reports live behind your account.
+            Boshqaruv paneli, tahlillar va hisobotlar akkauntingiz ortida joylashgan.
           </p>
           <Button asChild className="mt-6 w-full">
-            <Link to="/login">Log in</Link>
+            <Link to="/login">Kirish</Link>
           </Button>
         </div>
       </div>
@@ -69,12 +69,12 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               {subscription.plan} · {subscription.usedThisMonth}/{subscription.monthlyLimit}
             </Link>
-            <Button asChild variant="ghost" size="icon" aria-label="Settings">
+            <Button asChild variant="ghost" size="icon" aria-label="Sozlamalar">
               <Link to="/settings">
                 <Settings className="h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="ghost" size="icon" aria-label="Billing">
+            <Button asChild variant="ghost" size="icon" aria-label="To'lovlar">
               <Link to="/billing">
                 <CreditCard className="h-4 w-4" />
               </Link>
@@ -82,7 +82,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Button
               variant="ghost"
               size="icon"
-              aria-label="Log out"
+              aria-label="Chiqish"
               onClick={() => {
                 signOut();
                 void navigate({ to: "/" });

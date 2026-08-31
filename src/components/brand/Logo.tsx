@@ -43,7 +43,7 @@ export function Logo({
         </span>
         {withTagline ? (
           <span className="mt-1 text-[11px] text-muted-foreground">
-            AI-powered Instagram performance intelligence
+            AI asosidagi Instagram samaradorlik intellekti
           </span>
         ) : null}
       </span>

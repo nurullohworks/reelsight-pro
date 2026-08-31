@@ -16,13 +16,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/reports/$id")({
   head: () => ({
     meta: [
-      { title: "Reel performance report — REELPREDICT" },
+      { title: "Reel samaradorligi hisoboti — REELPREDICT" },
       {
         name: "description",
-        content: "Full AI performance report: score, estimated views, timeline analysis, recommendations and benchmark.",
+        content: "To‘liq AI samaradorlik hisoboti: ball, taxminiy ko‘rishlar, vaqt tahlili, tavsiyalar va benchmark.",
       },
-      { property: "og:title", content: "Reel performance report — REELPREDICT" },
-      { property: "og:description", content: "Detailed AI prediction report for your Instagram Reel." },
+      { property: "og:title", content: "Reel samaradorligi hisoboti — REELPREDICT" },
+      { property: "og:description", content: "Instagram Reel’ingiz uchun batafsil AI bashorat hisoboti." },
     ],
   }),
   component: ReportPage,
@@ -44,12 +44,12 @@ function ReportPage() {
     return (
       <AppShell>
         <div className="surface-card mx-auto max-w-md p-8 text-center">
-          <h1 className="text-lg font-semibold">Report not found</h1>
+          <h1 className="text-lg font-semibold">Hisobot topilmadi</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            This analysis is not in your workspace.
+            Bu tahlil sizning ish maydoningizda mavjud emas.
           </p>
           <Button asChild className="mt-6">
-            <Link to="/history">Back to history</Link>
+            <Link to="/history">Tarixga qaytish</Link>
           </Button>
         </div>
       </AppShell>
@@ -64,7 +64,7 @@ function ReportPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-[11px] uppercase tracking-widest text-muted-foreground">
-            Your Reel performance report
+            Reel samaradorligi hisobotingiz
           </p>
           <h1 className="mt-2 text-3xl font-semibold">{analysis.title}</h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -72,39 +72,39 @@ function ReportPage() {
           </p>
         </div>
         <Button variant="outline" onClick={() => void reportService.export(analysis)}>
-          <Download className="mr-1 h-4 w-4" /> Export PDF
+          <Download className="mr-1 h-4 w-4" /> PDF eksport
         </Button>
       </div>
 
       <div className="mt-8 grid gap-4 lg:grid-cols-[320px_1fr]">
         <div className="surface-card flex flex-col items-center p-8">
           <ScoreRing score={p.overall_score} size={200} />
-          <p className="mt-5 text-sm font-medium">Strong Performance Potential</p>
+          <p className="mt-5 text-sm font-medium">Yuqori samaradorlik salohiyati</p>
           <p className="mt-3 text-center text-xs leading-relaxed text-muted-foreground">
-            Predictions are estimates based on available data and historical performance signals.
-            Actual results may vary.
+            Bashoratlar mavjud ma’lumotlar va oldingi samaradorlik signallariga asoslangan taxminlardir.
+            Haqiqiy natijalar farq qilishi mumkin.
           </p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <StatCard
-            label="Estimated views"
+            label="Taxminiy ko‘rishlar"
             value={`${formatNumber(p.estimated_view_min)} – ${formatNumber(p.estimated_view_max)}`}
           />
           <StatCard
-            label="Estimated reach"
+            label="Taxminiy qamrov"
             value={`${formatNumber(p.estimated_reach_min)} – ${formatNumber(p.estimated_reach_max)}`}
           />
-          <StatCard label="Viral potential" value={`${p.viral_probability}%`} />
-          <StatCard label="Confidence" value={`${p.confidence_score}%`} />
+          <StatCard label="Viral salohiyat" value={`${p.viral_probability}%`} />
+          <StatCard label="Ishonch" value={`${p.confidence_score}%`} />
           <div className="surface-card p-5 sm:col-span-2">
             <h2 className="text-[11px] uppercase tracking-widest text-muted-foreground">
-              Strengths, weaknesses & risk factors
+              Kuchli va zaif tomonlar hamda xavf omillari
             </h2>
             <div className="mt-4 grid gap-5 md:grid-cols-3">
-              <List title="Strengths" items={p.strengths} tone="text-success" />
-              <List title="Weaknesses" items={p.weaknesses} tone="text-warning" />
-              <List title="Risk factors" items={p.risk_factors} tone="text-destructive" />
+              <List title="Kuchli tomonlar" items={p.strengths} tone="text-success" />
+              <List title="Zaif tomonlar" items={p.weaknesses} tone="text-warning" />
+              <List title="Xavf omillari" items={p.risk_factors} tone="text-destructive" />
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@ function ReportPage() {
 
       <section className="surface-card mt-6 p-6">
         <h2 className="text-sm uppercase tracking-widest text-muted-foreground">
-          Performance breakdown
+          Samaradorlik tafsiloti
         </h2>
         <div className="mt-6 grid gap-x-10 gap-y-5 md:grid-cols-2">
           {analysis.metrics.map((m) => (
@@ -122,7 +122,7 @@ function ReportPage() {
       </section>
 
       <section className="surface-card mt-6 p-6">
-        <h2 className="text-sm uppercase tracking-widest text-muted-foreground">Timeline analysis</h2>
+        <h2 className="text-sm uppercase tracking-widest text-muted-foreground">Vaqt tahlili</h2>
         <div className="mt-6 flex gap-1 overflow-hidden rounded-lg">
           {analysis.timeline.map((seg) => (
             <div
@@ -165,7 +165,7 @@ function ReportPage() {
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-destructive" />
               <div>
                 <p className="text-sm font-medium">
-                  Retention risk detected around {s.from}–{s.to - 1} seconds.
+                  {s.from}–{s.to - 1} soniya atrofida ushlab turish xavfi aniqlandi.
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">{s.note}</p>
               </div>
@@ -174,7 +174,7 @@ function ReportPage() {
       </section>
 
       <section className="mt-6">
-        <h2 className="text-xl font-semibold">What should you change before posting?</h2>
+        <h2 className="text-xl font-semibold">Joylashtirishdan oldin nimani o‘zgartirish kerak?</h2>
         <div className="mt-5 grid gap-4 lg:grid-cols-3">
           {analysis.recommendations.map((r) => (
             <div key={r.id} className="surface-card p-6">
@@ -184,16 +184,16 @@ function ReportPage() {
                   severityStyles[r.severity],
                 )}
               >
-                {r.severity} priority
+                {r.severity === "high" ? "yuqori" : r.severity === "medium" ? "o‘rta" : "past"} muhimlik
               </span>
               <h3 className="mt-4 font-medium">{r.title}</h3>
               <dl className="mt-4 space-y-3 text-sm">
-                <Row label="Current" value={r.current} />
-                <Row label="Recommended" value={r.recommended} />
-                <Row label="Why it matters" value={r.why} />
+                <Row label="Hozirgi holat" value={r.current} />
+                <Row label="Tavsiya etiladi" value={r.recommended} />
+                <Row label="Nima uchun muhim" value={r.why} />
               </dl>
               <div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-sm">
-                <span className="text-muted-foreground">Impact +{r.impact}</span>
+                <span className="text-muted-foreground">Ta’sir +{r.impact}</span>
                 <span className="tabular-nums">
                   {r.currentScore} <TrendingUp className="mx-1 inline h-3 w-3 text-primary" />{" "}
                   {r.potentialScore}
@@ -206,7 +206,7 @@ function ReportPage() {
 
       <section className="surface-card mt-6 p-6">
         <h2 className="text-sm uppercase tracking-widest text-muted-foreground">
-          Benchmark your content
+          Kontentingizni benchmark bilan solishtiring
         </h2>
         <div className="mt-6 h-72">
           <ResponsiveContainer width="100%" height="100%">
@@ -223,9 +223,9 @@ function ReportPage() {
                 }}
               />
               <Legend wrapperStyle={{ fontSize: 12 }} />
-              <Bar dataKey="reel" name="Your Reel" fill="var(--color-chart-1)" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="accountAvg" name="Account average" fill="var(--color-chart-2)" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="benchmark" name="Content benchmark" fill="var(--color-chart-3)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="reel" name="Sizning Reel’ingiz" fill="var(--color-chart-1)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="accountAvg" name="Akkaunt o‘rtachasi" fill="var(--color-chart-2)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="benchmark" name="Kontent benchmark" fill="var(--color-chart-3)" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -233,24 +233,24 @@ function ReportPage() {
 
       <section className="surface-card mt-6 p-6">
         <h2 className="text-sm uppercase tracking-widest text-muted-foreground">
-          Prediction accuracy
+          Bashorat aniqligi
         </h2>
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           <StatCard
-            label="Predicted"
+            label="Bashorat qilingan"
             value={`${formatNumber(p.estimated_view_min)} – ${formatNumber(p.estimated_view_max)}`}
           />
           <StatCard
-            label="Actual"
+            label="Haqiqiy"
             value={analysis.actualViews ? formatNumber(analysis.actualViews) : "—"}
           />
-          <StatCard label="Accuracy" value={accuracy ? accuracy.label : "Awaiting data"} />
+          <StatCard label="Aniqlik" value={accuracy ? accuracy.label : "Ma’lumot kutilmoqda"} />
         </div>
         {accuracy ? (
           <p className="mt-4 text-sm text-muted-foreground">
             {accuracy.inRange
-              ? "Your actual result was within the predicted performance range."
-              : "Your actual result fell outside the predicted range. This feeds back into the model."}
+              ? "Haqiqiy natijangiz bashorat qilingan samaradorlik oralig‘ida bo‘ldi."
+              : "Haqiqiy natijangiz bashorat qilingan oraliqdan tashqarida bo‘ldi. Bu model uchun teskari aloqa sifatida ishlatiladi."}
           </p>
         ) : (
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
@@ -258,7 +258,7 @@ function ReportPage() {
               value={actual}
               onChange={(e) => setActual(e.target.value)}
               inputMode="numeric"
-              placeholder="Enter actual views after publishing"
+              placeholder="Joylashtirilgandan keyingi haqiqiy ko‘rishlarni kiriting"
               className="sm:max-w-xs"
             />
             <Button
@@ -268,7 +268,7 @@ function ReportPage() {
                 if (v > 0) setActualViews(analysis.id, v);
               }}
             >
-              Log actual result
+              Haqiqiy natijani qayd etish
             </Button>
           </div>
         )}
@@ -276,7 +276,7 @@ function ReportPage() {
 
       <section className="surface-card mt-6 border-primary/40 p-8 shadow-[var(--shadow-glow)]">
         <p className="text-[11px] uppercase tracking-widest text-muted-foreground">
-          Posting recommendation
+          Joylashtirish bo‘yicha tavsiya
         </p>
         <h2 className="mt-3 text-3xl font-semibold">{analysis.verdict.state}</h2>
         <p className="mt-3 text-sm text-muted-foreground">{analysis.verdict.summary}</p>
@@ -288,13 +288,13 @@ function ReportPage() {
           ))}
         </ul>
         <p className="mt-5 text-sm text-muted-foreground">
-          Potential score after improvements:{" "}
+          Yaxshilashlardan keyingi salohiyatli ball:{" "}
           <span className="font-medium text-foreground">
             {p.overall_score} → {analysis.verdict.potentialScore}
           </span>
         </p>
         <Button asChild className="mt-6">
-          <Link to="/analyze">Optimize This Reel</Link>
+          <Link to="/analyze">Ushbu Reel’ni optimallashtirish</Link>
         </Button>
         <p className="mt-6 text-xs text-muted-foreground">{REPORT_DISCLAIMER}</p>
       </section>

@@ -18,13 +18,13 @@ import { accountSnapshot, accuracyHistory } from "@/lib/mock-data";
 export const Route = createFileRoute("/accounts")({
   head: () => ({
     meta: [
-      { title: "Instagram Account Intelligence — REELPREDICT" },
+      { title: "Instagram akkaunt tahlili — REELPREDICT" },
       {
         name: "description",
-        content: "Account-level analytics: views over time, engagement, follower growth and the content patterns AI detects.",
+        content: "Akkaunt darajasidagi tahlillar: vaqt bo'yicha ko'rishlar, faollik, obunachilar o'sishi va AI aniqlagan kontent naqshlari.",
       },
-      { property: "og:title", content: "Instagram Account Intelligence — REELPREDICT" },
-      { property: "og:description", content: "Understand what is working across your account, not just one Reel." },
+      { property: "og:title", content: "Instagram akkaunt tahlili — REELPREDICT" },
+      { property: "og:description", content: "Faqat bitta Reels emas, butun akkauntingiz bo'yicha nima yaxshi ishlashini tushunib oling." },
     ],
   }),
   component: Accounts,
@@ -41,19 +41,19 @@ function Accounts() {
   const a = accountSnapshot;
   return (
     <AppShell>
-      <h1 className="text-3xl font-semibold">Instagram Account Intelligence</h1>
-      <p className="mt-2 text-muted-foreground">{a.handle} · connected data source</p>
+      <h1 className="text-3xl font-semibold">Instagram akkaunt tahlili</h1>
+      <p className="mt-2 text-muted-foreground">{a.handle} · ulangan ma'lumot manbasi</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        <StatCard label="Followers" value={formatNumber(a.followers)} />
-        <StatCard label="Average Reel views" value={formatNumber(a.avgReelViews)} />
-        <StatCard label="Average engagement" value={`${a.avgEngagement}%`} />
-        <StatCard label="Growth" value={`+${a.growth}%`} hint="Last 60 days" />
-        <StatCard label="Content consistency" value={`${a.consistency}%`} />
+        <StatCard label="Obunachilar" value={formatNumber(a.followers)} />
+        <StatCard label="O'rtacha Reels ko'rishlari" value={formatNumber(a.avgReelViews)} />
+        <StatCard label="O'rtacha faollik" value={`${a.avgEngagement}%`} />
+        <StatCard label="O'sish" value={`+${a.growth}%`} hint="So'nggi 60 kun" />
+        <StatCard label="Kontent barqarorligi" value={`${a.consistency}%`} />
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <Panel title="Views over time">
+        <Panel title="Vaqt bo'yicha ko'rishlar">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={a.viewsOverTime}>
               <defs>
@@ -71,7 +71,7 @@ function Accounts() {
           </ResponsiveContainer>
         </Panel>
 
-        <Panel title="Engagement over time">
+        <Panel title="Vaqt bo'yicha faollik">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={a.viewsOverTime}>
               <CartesianGrid stroke="var(--color-border)" vertical={false} />
@@ -83,7 +83,7 @@ function Accounts() {
           </ResponsiveContainer>
         </Panel>
 
-        <Panel title="Follower growth">
+        <Panel title="Obunachilar o'sishi">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={a.followerGrowth}>
               <CartesianGrid stroke="var(--color-border)" vertical={false} />
@@ -95,7 +95,7 @@ function Accounts() {
           </ResponsiveContainer>
         </Panel>
 
-        <Panel title="Prediction accuracy over time">
+        <Panel title="Vaqt bo'yicha bashorat aniqligi">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={accuracyHistory}>
               <CartesianGrid stroke="var(--color-border)" vertical={false} />
@@ -109,12 +109,12 @@ function Accounts() {
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        <ReelList title="Top performing Reels" items={a.topReels} />
-        <ReelList title="Lowest performing Reels" items={a.lowReels} />
+        <ReelList title="Eng yaxshi natijali Reels" items={a.topReels} />
+        <ReelList title="Eng past natijali Reels" items={a.lowReels} />
       </div>
 
       <section className="surface-card mt-6 p-6">
-        <h2 className="text-sm uppercase tracking-widest text-muted-foreground">What is working?</h2>
+        <h2 className="text-sm uppercase tracking-widest text-muted-foreground">Nima yaxshi ishlayapti?</h2>
         <div className="mt-5 grid gap-3 md:grid-cols-3">
           {a.patterns.map((p) => (
             <p
@@ -126,8 +126,8 @@ function Accounts() {
           ))}
         </div>
         <p className="mt-5 text-xs text-muted-foreground">
-          Patterns are derived from your own account data. Predictions are estimates and actual
-          results may vary.
+          Naqshlar sizning o'z akkaunt ma'lumotlaringizdan olingan. Bashoratlar taxminiy bo'lib, haqiqiy
+          natijalar farq qilishi mumkin.
         </p>
       </section>
     </AppShell>

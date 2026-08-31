@@ -19,23 +19,23 @@ import { accountSnapshot } from "@/lib/mock-data";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — REELPREDICT" },
+      { title: "Boshqaruv paneli — REELPREDICT" },
       {
         name: "description",
-        content: "Your Reels performance intelligence workspace: scores, trends and AI insights.",
+        content: "Reels samaradorligini tahlil qilish maydoni: ballar, tendentsiyalar va AI xulosalari.",
       },
-      { property: "og:title", content: "Dashboard — REELPREDICT" },
-      { property: "og:description", content: "Track prediction scores, accuracy and recent analyses." },
+      { property: "og:title", content: "Boshqaruv paneli — REELPREDICT" },
+      { property: "og:description", content: "Bashorat ballarini, aniqlikni va so'nggi tahlillarni kuzating." },
     ],
   }),
   component: Dashboard,
 });
 
 function useGreeting() {
-  const [greeting, setGreeting] = useState("Welcome back");
+  const [greeting, setGreeting] = useState("Xush kelibsiz");
   useEffect(() => {
     const h = new Date().getHours();
-    setGreeting(h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening");
+    setGreeting(h < 12 ? "Xayrli tong" : h < 18 ? "Xayrli kun" : "Xayrli kech");
   }, []);
   return greeting;
 }
@@ -53,29 +53,29 @@ function Dashboard() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-semibold">{greet}{user ? `, ${user.name}` : ""}.</h1>
-          <p className="mt-2 text-muted-foreground">What are you analyzing today?</p>
+          <p className="mt-2 text-muted-foreground">Bugun nimani tahlil qilmoqchisiz?</p>
         </div>
         <Button asChild size="lg">
           <Link to="/analyze">
-            <Plus className="mr-1 h-4 w-4" /> Analyze New Reel
+            <Plus className="mr-1 h-4 w-4" /> Yangi Reels tahlil qilish
           </Link>
         </Button>
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Last analysis" value={`${last?.prediction.overall_score ?? 0}/100`} hint={last?.title} />
-        <StatCard label="Average score" value={`${avg}/100`} hint="Across all analyses" />
-        <StatCard label="Prediction accuracy" value="81%" hint="Based on published results" />
-        <StatCard label="Videos analyzed" value={analyses.length} hint="This workspace" />
+        <StatCard label="So'nggi tahlil" value={`${last?.prediction.overall_score ?? 0}/100`} hint={last?.title} />
+        <StatCard label="O'rtacha ball" value={`${avg}/100`} hint="Barcha tahlillar bo'yicha" />
+        <StatCard label="Bashorat aniqligi" value="81%" hint="Chop etilgan natijalar asosida" />
+        <StatCard label="Tahlil qilingan videolar" value={analyses.length} hint="Ushbu ish maydonida" />
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[2fr_1fr]">
         <div className="surface-card p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm uppercase tracking-widest text-muted-foreground">
-              Performance trends
+              Samaradorlik tendentsiyalari
             </h2>
-            <span className="text-xs text-muted-foreground">Last 8 weeks</span>
+            <span className="text-xs text-muted-foreground">So'nggi 8 hafta</span>
           </div>
           <div className="mt-6 h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -110,7 +110,7 @@ function Dashboard() {
         </div>
 
         <div className="surface-card p-6">
-          <h2 className="text-sm uppercase tracking-widest text-muted-foreground">AI insights</h2>
+          <h2 className="text-sm uppercase tracking-widest text-muted-foreground">AI xulosalari</h2>
           <ul className="mt-5 space-y-4">
             {accountSnapshot.patterns.map((p) => (
               <li key={p} className="rounded-lg border border-border bg-background/40 p-4 text-sm leading-relaxed text-foreground/85">
@@ -123,9 +123,9 @@ function Dashboard() {
 
       <div className="surface-card mt-6 p-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm uppercase tracking-widest text-muted-foreground">Recent analyses</h2>
+          <h2 className="text-sm uppercase tracking-widest text-muted-foreground">So'nggi tahlillar</h2>
           <Link to="/history" className="text-xs text-primary hover:underline">
-            View all
+            Barchasini ko'rish
           </Link>
         </div>
         <div className="mt-4 divide-y divide-border">
