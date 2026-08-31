@@ -7,7 +7,7 @@ export interface ReportService {
 }
 
 export const REPORT_DISCLAIMER =
-  "AI-generated prediction. Results are estimates and not guaranteed.";
+  "AI tomonidan yaratilgan bashorat. Natijalar taxminiy bo‘lib, kafolatlanmaydi.";
 
 export const printReportService: ReportService = {
   id: "print",
