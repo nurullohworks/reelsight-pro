@@ -112,25 +112,22 @@ function Landing() {
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.35]" />
         <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-20 md:pt-28">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-[11px] uppercase tracking-widest text-muted-foreground">
-              <Zap className="h-3 w-3 text-primary" /> AI bashorat tizimi
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider text-primary">
+              <Zap className="h-3.5 w-3.5 text-primary" /> Meta Algoritmi & LiveDune Benchmark Dvigateli
             </span>
-            <h1 className="mt-6 text-5xl font-semibold leading-[1.05] md:text-7xl">
+            <h1 className="mt-6 text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl">
               Joylashdan Oldin Biling.
             </h1>
-            <p className="mt-5 text-lg text-foreground/80 md:text-xl">
-              Instagram kontentingiz e'lon qilinishidan oldin qanday natija berishini bashorat qiling.
+            <p className="mt-5 text-lg font-medium text-foreground/90 md:text-xl">
+              Videongiz Explore-ga chiqadimi yoki bloklanadimi? Nashr etishdan oldin aniq bilib oling.
             </p>
-            <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Reels videongizni yuklang yoki Instagram hisobingizni ulang. Bizning AI tizimimiz
-              kontentingizni, hisob samaradorligini va mavjud reyting signallarini tahlil qilib,
-              samaradorlikni baholaydi, zaif tomonlarni aniqlaydi va aynan nimani yaxshilash
-              kerakligini ko'rsatadi.
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Oddiy taxminlar emas — REELPREDICT videongizni <strong>Meta Reels algoritmi (DM Shares, 3s Hook, Loop faktor)</strong> hamda <strong>LiveDune’ning minglab real akkauntlar benchmarklari</strong> bilan solishtirib, soniyalar bo‘yicha aniq kamchiliklarni ko‘rsatadi.
             </p>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button asChild size="lg">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button asChild size="lg" className="shadow-lg shadow-primary/25 font-semibold py-6 px-8">
                 <Link to="/analyze">
-                  Birinchi Reelsni Tahlil Qiling <ArrowRight className="ml-1 h-4 w-4" />
+                  Reelsni Algoritmik Tahlil Qilish <ArrowRight className="ml-1.5 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">

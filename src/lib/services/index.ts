@@ -18,3 +18,6 @@ export * from "./prediction";
 export * from "./recommendations";
 export * from "./report";
 export * from "./third-party-analytics";
+export * from "./livedune";
+export * from "./meta-algorithm";
+

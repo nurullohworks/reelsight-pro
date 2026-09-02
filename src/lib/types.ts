@@ -41,6 +41,60 @@ export interface PredictionResult {
 
 export type AnalysisStatus = "Analyzed" | "Published" | "Tracking" | "Completed";
 
+export type AlgorithmVerdictState = "UCHADI" | "O'RTACHA" | "UCHMAYDI";
+
+export interface MetaAlgorithmStage {
+  name: string;
+  description: string;
+  passed: boolean;
+  score: number;
+  threshold: number;
+  note: string;
+}
+
+export interface MetaAlgorithmBreakdown {
+  totalAlgorithmScore: number;
+  dmSharesWeight: number; // 35%
+  completionLoopWeight: number; // 25%
+  hookRetentionWeight: number; // 20%
+  saveCommentWeight: number; // 10%
+  pacingAudioWeight: number; // 10%
+  watermarkPenalty: boolean;
+  stages: {
+    seedTest: MetaAlgorithmStage; // Stage 1: Initial 200-500 test audience
+    lookalikeExpand: MetaAlgorithmStage; // Stage 2: Lookalike seed audience
+    exploreViral: MetaAlgorithmStage; // Stage 3: Global Explore / Recommendations
+  };
+}
+
+export interface LiveDuneBenchmarkItem {
+  metric: string;
+  current: number;
+  nicheAvg: number;
+  top10Percent: number;
+  unit: "%" | "pts" | "ratio";
+  status: "ahead" | "average" | "behind";
+}
+
+export interface LiveDuneNicheBenchmark {
+  nicheKey: string;
+  nicheName: string;
+  nicheAvgER: number;
+  top10ViralER: number;
+  sampleAccountsCount: number;
+  benchmarks: LiveDuneBenchmarkItem[];
+  insight: string;
+}
+
+export interface ExactDeficiency {
+  id: string;
+  timestamp: string; // e.g. "00:00 - 00:03"
+  flaw: string; // e.g. "Hook vizual dinamikasi sust"
+  whyItFailsMetaAlgorithm: string; // e.g. "Meta 3-soniyalik testda 68% tomoshabin drop-off qiladi"
+  actionableFix: string; // e.g. "Birinchi 1.5s ichida tezkor kadr yoki vizual intriga qo'ying"
+  severity: Severity;
+}
+
 export interface Analysis {
   id: string;
   title: string;
@@ -54,8 +108,13 @@ export interface Analysis {
   recommendations: Recommendation[];
   benchmark: { metric: string; reel: number; accountAvg: number; benchmark: number }[];
   actualViews?: number | undefined;
+  niche?: string;
+  metaAlgorithm?: MetaAlgorithmBreakdown;
+  liveDuneBenchmark?: LiveDuneNicheBenchmark;
+  exactDeficiencies?: ExactDeficiency[];
   verdict: {
     state: "Ready to post" | "Ready with improvements" | "Needs work";
+    algorithmVerdict?: AlgorithmVerdictState;
     summary: string;
     fixes: string[];
     potentialScore: number;

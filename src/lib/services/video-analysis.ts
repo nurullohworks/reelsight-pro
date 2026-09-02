@@ -5,6 +5,8 @@ export interface VideoAnalysisInput {
   fileName: string;
   sizeBytes: number;
   durationSec?: number;
+  niche?: string;
+  hasWatermark?: boolean;
 }
 
 export interface VideoAnalysisService {
@@ -12,9 +14,9 @@ export interface VideoAnalysisService {
   analyze(input: VideoAnalysisInput): Promise<Analysis>;
 }
 
-/** Mock provider — replace with an AI provider behind a server function. */
+/** Meta Algorithm & LiveDune engine provider */
 export const mockVideoAnalysisService: VideoAnalysisService = {
-  id: "mock",
+  id: "meta-livedune-engine",
   async analyze(input) {
     const seed = Math.floor(Math.random() * 12) + 1;
     const analysis = makeAnalysis(seed, {
@@ -23,6 +25,10 @@ export const mockVideoAnalysisService: VideoAnalysisService = {
       title: input.fileName.replace(/\.[a-z0-9]+$/i, ""),
       createdAt: new Date().toISOString(),
       status: "Analyzed",
+      niche: input.niche ?? "business",
+      metaAlgorithm: {
+        watermarkPenalty: input.hasWatermark ?? false,
+      } as never,
     });
     return analysis;
   },
@@ -31,11 +37,11 @@ export const mockVideoAnalysisService: VideoAnalysisService = {
 export const videoAnalysisService: VideoAnalysisService = mockVideoAnalysisService;
 
 export const ANALYSIS_STEPS = [
-  "Video qayta ishlanmoqda",
-  "Vizual tahlil",
-  "Audio tahlil",
-  "Kontentni tushunish",
-  "Akkaunt bilan solishtirish",
-  "Samaradorlikni bashorat qilish",
-  "Hisobot yaratish",
+  "Video va kadrlar tahlil qilinmoqda",
+  "0-3s Hook va retention ehtimoli tekshirilmoqda",
+  "Meta algoritmi: DM Shares va Loop ko'rsatkichi baholanmoqda",
+  "LiveDune sohaviy benchmarklari bilan solishtirilmoqda",
+  "Xatoliklar va kamchiliklar aniqlanmoqda",
+  "Algoritmik hukm va hisobot shakllantirilmoqda",
 ];
+

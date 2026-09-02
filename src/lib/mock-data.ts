@@ -12,114 +12,147 @@ const titles = [
   "Sahna ortida: startap kuni",
 ];
 
+import { evaluateMetaAlgorithm } from "./services/meta-algorithm";
+import { getLiveDuneBenchmark } from "./services/livedune";
+
 export function makeAnalysis(seed = 0, overrides: Partial<Analysis> = {}): Analysis {
   const rnd = (n: number, spread: number) => Math.round(n + ((seed * 37) % spread) - spread / 2);
-  const overall = Math.min(96, Math.max(48, rnd(82, 26)));
-  const minViews = 1000 * Math.max(6, Math.round(overall * 0.22));
-  const maxViews = minViews * 2.3;
+  const hookScore = Math.min(98, Math.max(52, rnd(84, 22)));
+  const retentionScore = Math.min(95, Math.max(48, rnd(78, 24)));
+  const dmShareScore = Math.min(96, Math.max(45, rnd(82, 28)));
+  const saveScore = Math.min(95, Math.max(40, rnd(74, 26)));
+  const pacingScore = Math.min(94, Math.max(50, rnd(80, 20)));
+  const durationSec = 21 + (seed % 10);
+  const niche = overrides.niche ?? (["business", "education", "tech", "ecommerce", "lifestyle", "entertainment"][seed % 6]!);
+
+  const metaEval = evaluateMetaAlgorithm({
+    hookScore,
+    retentionScore,
+    dmSharePotential: dmShareScore,
+    savePotential: saveScore,
+    pacingScore,
+    hasWatermark: overrides.metaAlgorithm?.watermarkPenalty ?? false,
+    durationSec,
+  });
+
+  const liveDuneBenchmark = getLiveDuneBenchmark(niche, {
+    hookScore,
+    retentionScore,
+    engagementScore: dmShareScore,
+    dmShareScore,
+    saveScore,
+  });
+
+  const overall = metaEval.breakdown.totalAlgorithmScore;
+  const minViews = 1000 * Math.max(6, Math.round(overall * 0.28));
+  const maxViews = minViews * 2.5;
 
   return {
     id: `an_${1000 + seed}`,
     title: titles[seed % titles.length]!,
     fileName: `reel-${1000 + seed}.mp4`,
     createdAt: new Date(BASE_TIME - seed * 86400000 * 2).toISOString(),
-    durationSec: 21,
+    durationSec,
     status: (["Analyzed", "Published", "Tracking", "Completed"] as const)[seed % 4]!,
+    niche,
+    metaAlgorithm: metaEval.breakdown,
+    liveDuneBenchmark,
+    exactDeficiencies: metaEval.exactDeficiencies,
     prediction: {
       overall_score: overall,
-      viral_probability: Math.min(94, overall - 6),
+      viral_probability: Math.min(96, Math.max(30, overall - 4)),
       estimated_view_min: minViews,
       estimated_view_max: Math.round(maxViews),
-      estimated_reach_min: Math.round(minViews * 0.68),
-      estimated_reach_max: Math.round(maxViews * 0.74),
-      confidence_score: 74,
+      estimated_reach_min: Math.round(minViews * 0.72),
+      estimated_reach_max: Math.round(maxViews * 0.82),
+      confidence_score: 82,
       strengths: [
-        "Hook birinchi 1.4 soniyada ishlaydi",
-        "Sur'at eng yaxshi natija bergan formatingizga mos",
-        "Mavzu auditoriyangiz qiziqishlariga mos keladi",
+        "Hook birinchi 1.4 soniyada ishlaydi va drop-offni pasaytiradi",
+        "DM orqali ulashish (Share trigger) yuqori salohiyatga ega",
+        "Mavzu tanlangan nisha auditoriyasiga to'liq mos keladi",
       ],
       weaknesses: [
-        "O‘rta qismida ushlab turish pasayadi",
-        "CTA passiv va oson o‘tkazib yuboriladi",
+        "O‘rta qismida dinamika pasayishi (drop-off xavfi)",
+        "Oxirgi soniyalarda aniq Save/Share chaqiruvi sust",
       ],
       risk_factors: [
-        "12s va 15s orasida vizual jihatdan o‘xshash sahnalar",
+        "12s va 15s orasida vizual bir xillik sababli e'tibor susayishi",
         "Matn qatlami zichligi akkaunt o‘rtachasidan yuqori",
       ],
     },
     metrics: [
-      { key: "hook", label: "Hook", score: 91 },
-      { key: "retention", label: "Ushlab turish", score: 78 },
-      { key: "engagement", label: "Faollik salohiyati", score: 84 },
-      { key: "visual", label: "Vizual sifat", score: 88 },
+      { key: "hook", label: "3s Hook kuchi", score: hookScore },
+      { key: "retention", label: "Ushlab turish & Loop", score: retentionScore },
+      { key: "engagement", label: "DM Shares & Ulashish", score: dmShareScore },
+      { key: "visual", label: "Vizual dinamika", score: Math.min(98, hookScore + 2) },
       { key: "audience", label: "Auditoriyaga mosligi", score: 86 },
-      { key: "cta", label: "CTA", score: 63 },
+      { key: "cta", label: "Save & CTA kuchi", score: saveScore },
       { key: "originality", label: "Originallik", score: 81 },
-      { key: "story", label: "Hikoya qilish", score: 79 },
+      { key: "story", label: "Pacing & Montaj", score: pacingScore },
     ],
     timeline: [
-      { from: 0, to: 3, label: "Hook", verdict: "Strong" },
-      { from: 3, to: 7, label: "Kirish", verdict: "Good" },
-      { from: 7, to: 12, label: "Qiymat", verdict: "Strong" },
+      { from: 0, to: 3, label: "Hook (0-3s)", verdict: hookScore >= 75 ? "Strong" : "Average" },
+      { from: 3, to: 7, label: "Kirish & Intriga", verdict: "Good" },
+      { from: 7, to: 12, label: "Asosiy Qiymat", verdict: "Strong" },
       {
         from: 12,
         to: 16,
         label: "Ushlab turish xavfi",
-        verdict: "Weak",
-        note: "Vizual o‘zgarish chastotasini oshiring yoki kuchliroq diqqatni jalb qiluvchi uzilish kiriting.",
+        verdict: pacingScore < 70 ? "Weak" : "Good",
+        note: "Vizual o‘zgarish chastotasini oshiring yoki qo'shimcha B-roll kadrlar kiriting.",
       },
-      { from: 16, to: 21, label: "CTA", verdict: "Average" },
+      { from: 16, to: durationSec, label: "CTA & Save", verdict: saveScore >= 70 ? "Good" : "Average" },
     ],
     recommendations: [
       {
         id: "r1",
         severity: "high",
-        title: "Ochilish hookini kuchaytiring",
-        current: "Umumiy kirish",
+        title: "Ochilish hookini kuchaytiring (0-3s)",
+        current: "Sekin kirish",
         recommended:
-          "Birinchi soniyalarda darhol qiziqish uyg‘oting yoki aniq foyda ko‘rsating.",
-        why: "Dastlabki ikki soniya qisqa formatdagi kontentda ko‘rishning eng katta ulushini belgilaydi.",
-        impact: 9,
-        currentScore: 68,
-        potentialScore: 88,
+          "Birinchi 1.5 soniyada darhol savol, shok vizual yoki qiziqarli muammoni ko'rsating.",
+        why: "Meta birinchi 3 soniyada 65%+ tomoshabin tashlab ketsa, videoni Explore filtridan chiqaradi.",
+        impact: 12,
+        currentScore: hookScore,
+        potentialScore: Math.min(98, hookScore + 14),
       },
       {
         id: "r2",
         severity: "medium",
-        title: "CTA ni yaxshilang",
-        current: "Past darajadagi o‘zaro ta’sir rag‘bati",
-        recommended: "Videoning asosiy qiymatiga bog‘liq to‘g‘ridan-to‘g‘ri harakatdan foydalaning.",
-        why: "Saqlash va ulashishlar qamrovni kengaytirish uchun kuchli faollik signallaridir.",
-        impact: 6,
-        currentScore: 63,
-        potentialScore: 80,
+        title: "DM orqali ulashish chaqiruvini (Share CTA) qo'shing",
+        current: "Oddiy yoki noaniq yakun",
+        recommended: "Videoni do'stiga yuborishga undovchi aniq ssenariy bering.",
+        why: "Meta algoritmi (Sends per Reach) layklardan 3-5 barobar ko'proq tavsiyaga chiqaradi.",
+        impact: 10,
+        currentScore: dmShareScore,
+        potentialScore: Math.min(96, dmShareScore + 12),
       },
       {
         id: "r3",
         severity: "low",
-        title: "Vizual xilma-xillikni oshiring",
+        title: "Vizual dinamikani oshiring",
         current: "Bir nechta vizual jihatdan o‘xshash sahnalar",
-        recommended: "Nazorat qilinadigan sahna o‘zgarishlarini kiriting.",
-        why: "Vizual o‘zgarish chastotasi akkauntingizdagi video o‘rtasida ushlab turish bilan bog‘liq.",
-        impact: 3,
-        currentScore: 74,
-        potentialScore: 84,
+        recommended: "Har 2-2.5 soniyada kadr almashing yoki zoom-in effektidan foydalaning.",
+        why: "Vizual o‘zgarish chastotasi tomoshabinni oxirigacha ushlab turishni 32% ga oshiradi.",
+        impact: 6,
+        currentScore: pacingScore,
+        potentialScore: Math.min(95, pacingScore + 8),
       },
     ],
     benchmark: [
-      { metric: "Hook", reel: 91, accountAvg: 74, benchmark: 86 },
-      { metric: "Retention", reel: 78, accountAvg: 71, benchmark: 83 },
-      { metric: "Engagement", reel: 84, accountAvg: 69, benchmark: 80 },
-      { metric: "Shares", reel: 66, accountAvg: 58, benchmark: 74 },
-      { metric: "Saves", reel: 81, accountAvg: 64, benchmark: 77 },
-      { metric: "Views", reel: 79, accountAvg: 70, benchmark: 82 },
+      { metric: "Hook (0-3s)", reel: hookScore, accountAvg: 74, benchmark: 86 },
+      { metric: "Retention", reel: retentionScore, accountAvg: 71, benchmark: 83 },
+      { metric: "DM Shares", reel: dmShareScore, accountAvg: 58, benchmark: 74 },
+      { metric: "Saves", reel: saveScore, accountAvg: 64, benchmark: 77 },
+      { metric: "Views", reel: overall, accountAvg: 70, benchmark: 82 },
     ],
     actualViews: seed % 3 === 0 ? 31400 : undefined,
     verdict: {
-      state: "Ready with improvements",
-      summary: "Reel’ingiz yuqori salohiyatga ega, ammo 2 ta muammo ushlab turishni cheklashi mumkin.",
-      fixes: ["Birinchi 2 soniyani kuchaytiring", "CTA ni yaxshilang"],
-      potentialScore: Math.min(97, overall + 9),
+      state: metaEval.verdict === "UCHADI" ? "Ready to post" : metaEval.verdict === "O'RTACHA" ? "Ready with improvements" : "Needs work",
+      algorithmVerdict: metaEval.verdict,
+      summary: metaEval.verdictSummary,
+      fixes: metaEval.exactDeficiencies.map((d) => `${d.timestamp}: ${d.flaw}`).slice(0, 3),
+      potentialScore: Math.min(97, overall + 11),
     },
     ...overrides,
   };

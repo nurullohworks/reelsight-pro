@@ -129,25 +129,51 @@ const VERDICT: Record<string, TimelineSegment["verdict"]> = {
   weak: "Weak",
 };
 
-/** Maps the provider JSON into the app's existing `Analysis` shape (UI unchanged). */
+import { evaluateMetaAlgorithm } from "./meta-algorithm";
+import { getLiveDuneBenchmark } from "./livedune";
+
+/** Maps the provider JSON into the app's existing `Analysis` shape with Meta Algorithm & LiveDune signals. */
 export function toAnalysis(
   json: ReelAnalysisJson,
-  input: { fileName: string; durationSec?: number; accountAvgViews?: number },
+  input: { fileName: string; durationSec?: number; accountAvgViews?: number; niche?: string; hasWatermark?: boolean },
 ): Analysis {
   const metrics: MetricScore[] = [
-    { key: "hook", label: "Hook kuchi", score: clamp(json.hook_score) },
-    { key: "retention", label: "Ushlab qolish", score: clamp(json.retention_score) },
-    { key: "engagement", label: "Faollik salohiyati", score: clamp(json.engagement_potential) },
-    { key: "visual", label: "Vizual sifat", score: clamp(json.visual_quality) },
-    { key: "cta", label: "CTA kuchi", score: clamp(json.cta_score) },
+    { key: "hook", label: "Hook kuchi (0-3s)", score: clamp(json.hook_score) },
+    { key: "retention", label: "Ushlab qolish & Loop", score: clamp(json.retention_score) },
+    { key: "engagement", label: "DM Shares & Ulashish", score: clamp(json.engagement_potential) },
+    { key: "visual", label: "Vizual dinamika", score: clamp(json.visual_quality) },
+    { key: "cta", label: "CTA & Save chaqiruvi", score: clamp(json.cta_score) },
     { key: "audience", label: "Auditoriyaga mosligi", score: clamp(json.audience_fit) },
     { key: "originality", label: "Original'lik", score: clamp(json.originality_score ?? json.storytelling_score) },
-    { key: "storytelling", label: "Hikoya qilish", score: clamp(json.storytelling_score) },
+    { key: "storytelling", label: "Pacing & Montaj", score: clamp(json.storytelling_score) },
   ];
+
+  const durationSec = Math.round(input.durationSec ?? 30);
+  const nicheKey = input.niche ?? "business";
+
+  // Calculate Meta Algorithm Breakdown & Exact Deficiencies
+  const metaEval = evaluateMetaAlgorithm({
+    hookScore: clamp(json.hook_score),
+    retentionScore: clamp(json.retention_score),
+    dmSharePotential: clamp(json.engagement_potential),
+    savePotential: clamp(json.cta_score),
+    pacingScore: clamp(json.storytelling_score),
+    hasWatermark: input.hasWatermark ?? false,
+    durationSec,
+  });
+
+  // Calculate LiveDune Benchmark Comparison
+  const liveDuneBenchmark = getLiveDuneBenchmark(nicheKey, {
+    hookScore: clamp(json.hook_score),
+    retentionScore: clamp(json.retention_score),
+    engagementScore: clamp(json.engagement_potential),
+    dmShareScore: clamp(json.engagement_potential),
+    saveScore: clamp(json.cta_score),
+  });
 
   const viewsMin = Math.max(0, Math.round(json.estimated_views_min || 0));
   const viewsMax = Math.max(viewsMin, Math.round(json.estimated_views_max || 0));
-  const overall = clamp(json.overall_score);
+  const overall = metaEval.breakdown.totalAlgorithmScore;
   const accountAvg = input.accountAvgViews ?? Math.round((viewsMin + viewsMax) / 2);
 
   const timeline: TimelineSegment[] = (json.timeline_analysis ?? []).map((seg) => ({
@@ -172,19 +198,27 @@ export function toAnalysis(
 
   const potentialScore = Math.min(
     100,
-    Math.max(overall, ...recommendations.map((r) => r.potentialScore), overall),
+    Math.max(overall, ...recommendations.map((r) => r.potentialScore), overall + 12),
   );
 
   const state: Analysis["verdict"]["state"] =
-    overall >= 80 ? "Ready to post" : overall >= 60 ? "Ready with improvements" : "Needs work";
+    metaEval.verdict === "UCHADI"
+      ? "Ready to post"
+      : metaEval.verdict === "O'RTACHA"
+        ? "Ready with improvements"
+        : "Needs work";
 
   return {
     id: `an_${Date.now()}`,
     title: input.fileName.replace(/\.[a-z0-9]+$/i, ""),
     fileName: input.fileName,
     createdAt: new Date().toISOString(),
-    durationSec: Math.round(input.durationSec ?? timeline.at(-1)?.to ?? 30),
+    durationSec,
     status: "Analyzed",
+    niche: nicheKey,
+    metaAlgorithm: metaEval.breakdown,
+    liveDuneBenchmark,
+    exactDeficiencies: metaEval.exactDeficiencies,
     prediction: {
       overall_score: overall,
       viral_probability: clamp(json.viral_probability),
@@ -222,8 +256,9 @@ export function toAnalysis(
     ],
     verdict: {
       state,
-      summary: json.final_verdict ?? "",
-      fixes: recommendations.filter((r) => r.severity !== "low").slice(0, 3).map((r) => r.title),
+      algorithmVerdict: metaEval.verdict,
+      summary: metaEval.verdictSummary || json.final_verdict || "",
+      fixes: metaEval.exactDeficiencies.map((d) => `${d.timestamp}: ${d.flaw}`).slice(0, 3),
       potentialScore,
     },
   };
