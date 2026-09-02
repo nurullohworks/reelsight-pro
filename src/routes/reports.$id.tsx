@@ -226,7 +226,7 @@ function ReportPage() {
       </section>
 
       {/* 🧬 Meta 3-Stage Distribution Funnel */}
-      {meta && (
+      {meta?.stages?.seedTest && meta?.stages?.lookalikeExpand && meta?.stages?.exploreViral && (
         <section className="surface-card mt-6 p-6 border border-border/80">
           <div className="flex items-center gap-2">
             <Cpu className="h-5 w-5 text-primary" />
@@ -240,53 +240,53 @@ function ReportPage() {
 
           <div className="mt-5 grid gap-4 md:grid-cols-3">
             {/* Stage 1 */}
-            <div className={cn("rounded-xl border p-4 transition-all", meta.stages.seedTest.passed ? "border-emerald-500/40 bg-emerald-500/5" : "border-rose-500/40 bg-rose-500/5")}>
+            <div className={cn("rounded-xl border p-4 transition-all", meta.stages.seedTest?.passed ? "border-emerald-500/40 bg-emerald-500/5" : "border-rose-500/40 bg-rose-500/5")}>
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">1-Bosqich</span>
-                {meta.stages.seedTest.passed ? (
+                {meta.stages.seedTest?.passed ? (
                   <span className="flex items-center gap-1 text-xs font-bold text-emerald-400"><CheckCircle2 className="h-3.5 w-3.5" /> O'tdi</span>
                 ) : (
                   <span className="flex items-center gap-1 text-xs font-bold text-rose-400"><XCircle className="h-3.5 w-3.5" /> Xavf</span>
                 )}
               </div>
-              <h3 className="mt-2 text-sm font-semibold text-foreground">{meta.stages.seedTest.name}</h3>
-              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{meta.stages.seedTest.description}</p>
+              <h3 className="mt-2 text-sm font-semibold text-foreground">{meta.stages.seedTest?.name}</h3>
+              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{meta.stages.seedTest?.description}</p>
               <div className="mt-3 rounded-lg bg-background/60 p-2.5 text-[11px] text-foreground/85 font-medium border border-border/50">
-                {meta.stages.seedTest.note}
+                {meta.stages.seedTest?.note}
               </div>
             </div>
 
             {/* Stage 2 */}
-            <div className={cn("rounded-xl border p-4 transition-all", meta.stages.lookalikeExpand.passed ? "border-emerald-500/40 bg-emerald-500/5" : "border-amber-500/40 bg-amber-500/5")}>
+            <div className={cn("rounded-xl border p-4 transition-all", meta.stages.lookalikeExpand?.passed ? "border-emerald-500/40 bg-emerald-500/5" : "border-amber-500/40 bg-amber-500/5")}>
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">2-Bosqich</span>
-                {meta.stages.lookalikeExpand.passed ? (
+                {meta.stages.lookalikeExpand?.passed ? (
                   <span className="flex items-center gap-1 text-xs font-bold text-emerald-400"><CheckCircle2 className="h-3.5 w-3.5" /> O'tdi</span>
                 ) : (
                   <span className="flex items-center gap-1 text-xs font-bold text-amber-400"><AlertTriangle className="h-3.5 w-3.5" /> Cheklangan</span>
                 )}
               </div>
-              <h3 className="mt-2 text-sm font-semibold text-foreground">{meta.stages.lookalikeExpand.name}</h3>
-              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{meta.stages.lookalikeExpand.description}</p>
+              <h3 className="mt-2 text-sm font-semibold text-foreground">{meta.stages.lookalikeExpand?.name}</h3>
+              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{meta.stages.lookalikeExpand?.description}</p>
               <div className="mt-3 rounded-lg bg-background/60 p-2.5 text-[11px] text-foreground/85 font-medium border border-border/50">
-                {meta.stages.lookalikeExpand.note}
+                {meta.stages.lookalikeExpand?.note}
               </div>
             </div>
 
             {/* Stage 3 */}
-            <div className={cn("rounded-xl border p-4 transition-all", meta.stages.exploreViral.passed ? "border-emerald-500/40 bg-emerald-500/5" : "border-border bg-card/40")}>
+            <div className={cn("rounded-xl border p-4 transition-all", meta.stages.exploreViral?.passed ? "border-emerald-500/40 bg-emerald-500/5" : "border-border bg-card/40")}>
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">3-Bosqich</span>
-                {meta.stages.exploreViral.passed ? (
+                {meta.stages.exploreViral?.passed ? (
                   <span className="flex items-center gap-1 text-xs font-bold text-emerald-400"><Flame className="h-3.5 w-3.5" /> Explore</span>
                 ) : (
                   <span className="flex items-center gap-1 text-xs font-bold text-muted-foreground"><XCircle className="h-3.5 w-3.5" /> Yetib bormaydi</span>
                 )}
               </div>
-              <h3 className="mt-2 text-sm font-semibold text-foreground">{meta.stages.exploreViral.name}</h3>
-              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{meta.stages.exploreViral.description}</p>
+              <h3 className="mt-2 text-sm font-semibold text-foreground">{meta.stages.exploreViral?.name}</h3>
+              <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">{meta.stages.exploreViral?.description}</p>
               <div className="mt-3 rounded-lg bg-background/60 p-2.5 text-[11px] text-foreground/85 font-medium border border-border/50">
-                {meta.stages.exploreViral.note}
+                {meta.stages.exploreViral?.note}
               </div>
             </div>
           </div>

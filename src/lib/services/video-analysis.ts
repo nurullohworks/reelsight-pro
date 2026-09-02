@@ -26,9 +26,6 @@ export const mockVideoAnalysisService: VideoAnalysisService = {
       createdAt: new Date().toISOString(),
       status: "Analyzed",
       niche: input.niche ?? "business",
-      metaAlgorithm: {
-        watermarkPenalty: input.hasWatermark ?? false,
-      } as never,
     });
     return analysis;
   },
