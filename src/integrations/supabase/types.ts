@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      reel_analyses: {
+        Row: {
+          account_data: Json | null
+          created_at: string
+          file_name: string
+          id: string
+          model: string | null
+          owner_key: string
+          previous_performance: Json | null
+          provider: string
+          result: Json
+          updated_at: string
+          user_id: string | null
+          video_metadata: Json
+          video_path: string | null
+        }
+        Insert: {
+          account_data?: Json | null
+          created_at?: string
+          file_name: string
+          id?: string
+          model?: string | null
+          owner_key: string
+          previous_performance?: Json | null
+          provider?: string
+          result: Json
+          updated_at?: string
+          user_id?: string | null
+          video_metadata?: Json
+          video_path?: string | null
+        }
+        Update: {
+          account_data?: Json | null
+          created_at?: string
+          file_name?: string
+          id?: string
+          model?: string | null
+          owner_key?: string
+          previous_performance?: Json | null
+          provider?: string
+          result?: Json
+          updated_at?: string
+          user_id?: string | null
+          video_metadata?: Json
+          video_path?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
