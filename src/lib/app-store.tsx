@@ -1,4 +1,4 @@
-import {
+﻿import {
   createContext,
   useCallback,
   useContext,
@@ -9,8 +9,10 @@ import {
 } from "react";
 import { seedAnalyses } from "./mock-data";
 import type { Analysis, PlanId, Subscription } from "./types";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface AppUser {
+  id?: string;
   name: string;
   email: string;
 }
@@ -27,8 +29,8 @@ interface AppState {
 interface AppStore extends AppState {
   hydrated: boolean;
   signIn: (email: string, name?: string) => void;
-  signOut: () => void;
-  addAnalysis: (analysis: Analysis) => void;
+  signOut: () => Promise<void>;
+  addAnalysis: (analysis: Analysis) => Promise<void>;
   setActualViews: (id: string, views: number) => void;
   setPlan: (plan: PlanId, cycle?: "monthly" | "yearly") => void;
   cancelSubscription: () => void;
@@ -57,6 +59,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AppState>(defaultState);
   const [hydrated, setHydrated] = useState(false);
 
+  // 1. LocalStorage-dan tiklash
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(KEY);
@@ -67,6 +70,52 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
     setHydrated(true);
   }, []);
 
+  // 2. Supabase Auth tinglash
+  useEffect(() => {
+    let authListener: { subscription?: { unsubscribe: () => void } } | null = null;
+    try {
+      if (supabase?.auth) {
+        supabase.auth.getSession().then(({ data }) => {
+          if (data?.session?.user) {
+            const u = data.session.user;
+            setState((prev) => ({
+              ...prev,
+              user: {
+                id: u.id,
+                email: u.email || "",
+                name: u.user_metadata?.full_name || u.email?.split("@")[0] || "Creator",
+              },
+            }));
+          }
+        }).catch(() => {});
+
+        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+          if (session?.user) {
+            const u = session.user;
+            setState((prev) => ({
+              ...prev,
+              user: {
+                id: u.id,
+                email: u.email || "",
+                name: u.user_metadata?.full_name || u.email?.split("@")[0] || "Creator",
+              },
+            }));
+          } else {
+            setState((prev) => ({ ...prev, user: null }));
+          }
+        });
+        authListener = listener;
+      }
+    } catch {
+      /* Supabase not yet configured */
+    }
+
+    return () => {
+      authListener?.subscription?.unsubscribe();
+    };
+  }, []);
+
+  // 3. Holatni LocalStorage-ga saqlash
   useEffect(() => {
     if (!hydrated) return;
     try {
@@ -83,15 +132,39 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
     }));
   }, []);
 
-  const signOut = useCallback(() => setState((s) => ({ ...s, user: null })), []);
+  const signOut = useCallback(async () => {
+    try {
+      if (supabase?.auth) {
+        await supabase.auth.signOut();
+      }
+    } catch {
+      /* ignore */
+    }
+    setState((s) => ({ ...s, user: null }));
+  }, []);
 
-  const addAnalysis = useCallback((analysis: Analysis) => {
+  const addAnalysis = useCallback(async (analysis: Analysis) => {
     setState((s) => ({
       ...s,
       analyses: [analysis, ...s.analyses],
       subscription: { ...s.subscription, usedThisMonth: s.subscription.usedThisMonth + 1 },
     }));
-  }, []);
+
+    // Agar Supabase ulangan bo'lsa, DB-ga ham saqlash
+    try {
+      if (supabase) {
+        await supabase.from("reel_analyses").insert({
+          file_name: analysis.fileName,
+          owner_key: state.user?.email || "anonymous_user",
+          user_id: state.user?.id || null,
+          result: analysis as any,
+          provider: "gemini-claude-meta-engine",
+        });
+      }
+    } catch (e) {
+      console.log("Supabase insert fallback to local storage");
+    }
+  }, [state.user]);
 
   const setActualViews = useCallback((id: string, views: number) => {
     setState((s) => ({
