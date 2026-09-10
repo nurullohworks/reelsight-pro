@@ -120,7 +120,7 @@ export function getLiveDuneBenchmark(
   }
 ): LiveDuneNicheBenchmark {
   const nicheData = LIVEDUNE_DATASET[nicheKey] || LIVEDUNE_DATASET["business"]!;
-  const nicheInfo = LIVEDUNE_NICHES.find((n) => n.key === nicheKey) || LIVEDUNE_NICHES[0];
+  const nicheInfo = LIVEDUNE_NICHES.find((n) => n.key === nicheKey) || LIVEDUNE_NICHES[0]!;
 
   const determineStatus = (curr: number, avg: number): "ahead" | "average" | "behind" => {
     if (curr >= avg * 1.08) return "ahead";
