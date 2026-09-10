@@ -83,7 +83,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
               user: {
                 id: u.id,
                 email: u.email || "",
-                name: u.user_metadata?.full_name || u.email?.split("@")[0] || "Creator",
+                name: u.user_metadata?.['full_name'] || u.email?.split("@")[0] || "Creator",
               },
             }));
           }
@@ -97,7 +97,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
               user: {
                 id: u.id,
                 email: u.email || "",
-                name: u.user_metadata?.full_name || u.email?.split("@")[0] || "Creator",
+                name: u.user_metadata?.['full_name'] || u.email?.split("@")[0] || "Creator",
               },
             }));
           } else {

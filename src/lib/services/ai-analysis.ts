@@ -20,7 +20,7 @@ Berilgan video parametrlari, nisha va metadatalar asosida Meta Reels reytinginin
 4. Save (saqlab olish) va foydalilik qiymati (Evergreen tarqatish).
 5. Pacing va montaj dinamikasi (har 2-3 soniyadagi o'zgarishlar, TikTok/CapCut logotiplari ta'siri).
 
-JAVOB FORMATI: Faqat to'g'ridan-to'g'ri toza JSON obyekt qaytar (hech qanday markdown ```json tegisiz):
+JAVOB FORMATI: Faqat to'g'ridan-to'g'ri toza JSON obyekt qaytar (hech qanday markdown kod bloki tegisiz):
 {
   "overall_score": 85,
   "hook_score": 88,
@@ -60,13 +60,13 @@ JAVOB FORMATI: Faqat to'g'ridan-to'g'ri toza JSON obyekt qaytar (hech qanday mar
 
 export async function analyzeVideoWithAI(input: AiAnalysisInput): Promise<Analysis> {
   const geminiKey = input.apiKey || 
-    (typeof import.meta !== "undefined" && import.meta.env?.VITE_GEMINI_API_KEY) || 
-    (typeof process !== "undefined" && process.env?.GEMINI_API_KEY) || 
+    (typeof import.meta !== "undefined" && import.meta.env?.['VITE_GEMINI_API_KEY']) || 
+    (typeof process !== "undefined" && process.env?.['GEMINI_API_KEY']) || 
     localStorage.getItem("reelpredict_gemini_key");
 
   const claudeKey = 
-    (typeof import.meta !== "undefined" && import.meta.env?.VITE_ANTHROPIC_API_KEY) || 
-    (typeof process !== "undefined" && process.env?.ANTHROPIC_API_KEY) || 
+    (typeof import.meta !== "undefined" && import.meta.env?.['VITE_ANTHROPIC_API_KEY']) || 
+    (typeof process !== "undefined" && process.env?.['ANTHROPIC_API_KEY']) || 
     localStorage.getItem("reelpredict_claude_key");
 
   // 1. Agar Gemini API Key mavjud bo'lsa:
@@ -154,20 +154,23 @@ Iltimos, yuqoridagi JSON formatda Meta algoritmi bo'yicha tahlilni qaytaring.`
   }
 
   // 3. Fallback: Intelligent Meta-Algorithm Heuristic Engine
-  const watermarkPenalty = input.hasWatermark ? 28 : 0;
-  const baseSeed = Math.abs(hashString(input.fileName + (input.niche || "business"))) % 12 + 1;
+  return buildFallbackAnalysis(input);
+}
+
+function buildFallbackAnalysis(input: AiAnalysisInput): Analysis {
+  const baseSeed = (Math.abs(hashString(input.fileName + (input.niche || "business"))) % 12) + 1;
   const baseAnalysis = makeAnalysis(baseSeed, {
     id: `an_${Date.now()}`,
     fileName: input.fileName,
-    sizeBytes: input.sizeBytes,
-    niche: input.niche,
-    hasWatermark: input.hasWatermark,
+    ...(input.niche ? { niche: input.niche } : {}),
   });
 
   if (input.hasWatermark) {
-    baseAnalysis.overallScore = Math.max(35, baseAnalysis.overallScore - watermarkPenalty);
-    baseAnalysis.viralProbability = Math.max(20, baseAnalysis.viralProbability - 35);
-    baseAnalysis.riskFactors.unshift("Meta algoritmi TikTok/CapCut watermarki bo'lgan videolarni Explore-da 80% gacha cheklaydi.");
+    baseAnalysis.prediction.overall_score = Math.max(35, baseAnalysis.prediction.overall_score - 28);
+    baseAnalysis.prediction.viral_probability = Math.max(20, baseAnalysis.prediction.viral_probability - 35);
+    baseAnalysis.prediction.risk_factors.unshift(
+      "Meta algoritmi TikTok/CapCut watermarki bo'lgan videolarni Explore-da 80% gacha cheklaydi.",
+    );
   }
 
   return baseAnalysis;
@@ -183,48 +186,69 @@ function hashString(str: string): number {
 }
 
 function formatAiAnalysis(parsed: any, input: AiAnalysisInput, provider: string): Analysis {
+  const base = buildFallbackAnalysis(input);
+  const overall = Number(parsed.overall_score) || base.prediction.overall_score;
+  const minViews = Number(parsed.estimated_views_min) || base.prediction.estimated_view_min;
+  const maxViews = Number(parsed.estimated_views_max) || base.prediction.estimated_view_max;
+
+  const metricMap: { key: string; label: string; value: number }[] = [
+    { key: "hook", label: "Hook (0-3s)", value: Number(parsed.hook_score) || 85 },
+    { key: "retention", label: "Ushlab qolish", value: Number(parsed.retention_score) || 78 },
+    { key: "engagement", label: "Faollik salohiyati", value: Number(parsed.engagement_potential) || 82 },
+    { key: "visual", label: "Vizual sifat", value: Number(parsed.visual_quality) || 88 },
+    { key: "audience", label: "Auditoriyaga moslik", value: Number(parsed.audience_fit) || 84 },
+    { key: "cta", label: "CTA kuchi", value: Number(parsed.cta_score) || 75 },
+    { key: "story", label: "Ssenariy (Storytelling)", value: Number(parsed.storytelling_score) || 80 },
+    { key: "originality", label: "Original'lik", value: Number(parsed.originality_score) || 80 },
+  ];
+
   return {
+    ...base,
     id: `an_${Date.now()}`,
     createdAt: new Date().toISOString(),
     fileName: input.fileName,
-    sizeBytes: input.sizeBytes,
-    durationSec: input.durationSec || 18,
-    niche: input.niche || "business",
-    hasWatermark: Boolean(input.hasWatermark),
-    overallScore: parsed.overall_score || 80,
-    hookScore: parsed.hook_score || 85,
-    retentionScore: parsed.retention_score || 78,
-    engagementPotential: parsed.engagement_potential || 82,
-    visualQuality: parsed.visual_quality || 88,
-    audienceFit: parsed.audience_fit || 84,
-    ctaScore: parsed.cta_score || 75,
-    storytellingScore: parsed.storytelling_score || 80,
-    originalityScore: parsed.originality_score || 80,
-    viralProbability: parsed.viral_probability || 78,
-    estimatedViewsMin: parsed.estimated_views_min || 12000,
-    estimatedViewsMax: parsed.estimated_views_max || 38000,
-    confidenceScore: parsed.confidence_score || 82,
-    strengths: parsed.strengths || ["Yaxshi ritm va sifat"],
-    weaknesses: parsed.weaknesses || ["Hook qismini kuchaytirish lozim"],
-    riskFactors: parsed.risk_factors || [],
-    recommendations: parsed.recommendations?.map((r: any, idx: number) => ({
-      id: `rec_${idx + 1}`,
-      priority: r.priority || "medium",
-      title: r.title || "Tavsiya",
-      current: r.current || "",
-      recommended: r.recommended || "",
-      why: r.why || "",
-      impact: r.impact || 15,
-      currentScore: r.current_score || 70,
-      potentialScore: r.potential_score || 85,
-    })) || [],
-    timelineAnalysis: parsed.timeline_analysis?.map((t: any) => ({
-      fromSec: t.from_sec,
-      toSec: t.to_sec,
-      label: t.label,
-      verdict: t.verdict,
-      note: t.note,
-    })) || [],
-    finalVerdict: parsed.final_verdict || `${provider} orqali tahlil yakunlandi.`,
+    durationSec: input.durationSec || base.durationSec,
+    niche: input.niche || base.niche || "business",
+    metrics: metricMap.map((m) => ({ key: m.key, label: m.label, score: m.value })),
+    prediction: {
+      ...base.prediction,
+      overall_score: overall,
+      viral_probability: Number(parsed.viral_probability) || base.prediction.viral_probability,
+      estimated_view_min: minViews,
+      estimated_view_max: maxViews,
+      estimated_reach_min: Math.round(minViews * 0.72),
+      estimated_reach_max: Math.round(maxViews * 0.82),
+      confidence_score: Number(parsed.confidence_score) || base.prediction.confidence_score,
+      strengths: parsed.strengths || base.prediction.strengths,
+      weaknesses: parsed.weaknesses || base.prediction.weaknesses,
+      risk_factors: parsed.risk_factors || base.prediction.risk_factors,
+    },
+    recommendations:
+      parsed.recommendations?.map((r: any, idx: number) => ({
+        id: `rec_${idx + 1}`,
+        severity: (r.priority === "high" || r.priority === "low" ? r.priority : "medium") as
+          | "high"
+          | "medium"
+          | "low",
+        title: r.title || "Tavsiya",
+        current: r.current || "",
+        recommended: r.recommended || "",
+        why: r.why || "",
+        impact: Number(r.impact) || 15,
+        currentScore: Number(r.current_score) || 70,
+        potentialScore: Number(r.potential_score) || 85,
+      })) || base.recommendations,
+    timeline:
+      parsed.timeline_analysis?.map((t: any) => ({
+        from: Number(t.from_sec) || 0,
+        to: Number(t.to_sec) || 0,
+        label: t.label || "",
+        verdict: "Good" as const,
+        note: t.note || t.verdict || "",
+      })) || base.timeline,
+    verdict: {
+      ...base.verdict,
+      summary: parsed.final_verdict || `${provider} orqali tahlil yakunlandi.`,
+    },
   };
 }

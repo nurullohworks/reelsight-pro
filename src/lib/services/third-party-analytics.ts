@@ -13,7 +13,7 @@ export const liveDuneAnalyticsService: ThirdPartyAnalyticsService = {
     return accuracyHistory;
   },
   async getBenchmark(category = "business") {
-    const data = LIVEDUNE_DATASET[category] || LIVEDUNE_DATASET["business"];
+    const data = LIVEDUNE_DATASET[category] || LIVEDUNE_DATASET["business"]!;
     return [
       { metric: "3s Hook Saqlanishi", value: data.benchmarks.hookRetention.top },
       { metric: "To'liq Ko'rish (Completion)", value: data.benchmarks.completionRate.top },
