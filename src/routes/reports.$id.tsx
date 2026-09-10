@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import {
   AlertTriangle,
   ArrowRight,
@@ -54,6 +55,7 @@ function ReportPage() {
   const { analyses, setActualViews } = useAppStore();
   const analysis = analyses.find((a) => a.id === id);
   const [actual, setActual] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   if (!analysis) {
     return (
@@ -463,9 +465,25 @@ function ReportPage() {
 
       {/* Accuracy Tracking */}
       <section className="surface-card mt-6 p-6 border border-border/80">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-          Bashorat Aniqligini Qayd Etish
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+            Bashorat Aniqligini Qayd Etish
+          </h2>
+          {analysis.actualViews && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs text-primary hover:text-primary/80"
+              onClick={() => {
+                setIsEditing(true);
+                setActual(String(analysis.actualViews));
+              }}
+            >
+              Qayta kiritish / O‘zgartirish
+            </Button>
+          )}
+        </div>
+
         <div className="mt-5 grid gap-4 md:grid-cols-3">
           <StatCard
             label="Bashorat qilingan"
@@ -473,34 +491,61 @@ function ReportPage() {
           />
           <StatCard
             label="Haqiqiy natija"
-            value={analysis.actualViews ? formatNumber(analysis.actualViews) : "—"}
+            value={analysis.actualViews ? formatNumber(analysis.actualViews) : "— (Kiritilmagan)"}
           />
-          <StatCard label="Aniqlik darajasi" value={accuracy ? accuracy.label : "Ma’lumot kutilmoqda"} />
+          <StatCard
+            label="Aniqlik darajasi"
+            value={
+              accuracy
+                ? `${accuracy.label} (${accuracy.percent}% aniqlik)`
+                : "Kiritish kutilmoqda"
+            }
+          />
         </div>
-        {accuracy ? (
-          <p className="mt-4 text-sm text-muted-foreground">
-            {accuracy.inRange
-              ? "Haqiqiy natijangiz bashorat qilingan samaradorlik oralig‘ida bo‘ldi."
-              : "Haqiqiy natijangiz bashorat qilingan oraliqdan tashqarida bo‘ldi. Bu model uchun teskari aloqa sifatida ishlatiladi."}
-          </p>
+
+        {!analysis.actualViews || isEditing ? (
+          <div className="mt-5 rounded-xl border border-primary/20 bg-primary/5 p-4">
+            <p className="text-xs text-muted-foreground font-medium">
+              Videongizni Instagram’ga joylagach, qancha ko‘rish (Views) yig‘ganini kiriting:
+            </p>
+            <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+              <Input
+                value={actual}
+                onChange={(e) => setActual(e.target.value)}
+                inputMode="numeric"
+                placeholder="Masalan: 1850 yoki 2400"
+                className="sm:max-w-xs bg-background"
+              />
+              <Button
+                onClick={() => {
+                  const v = Number(actual.replace(/\D/g, ""));
+                  if (v > 0) {
+                    setActualViews(analysis.id, v);
+                    setIsEditing(false);
+                    toast.success("Haqiqiy natija saqlandi!", {
+                      description: `Aniqlik darajasi avtomatik hisoblandi.`,
+                    });
+                  } else {
+                    toast.error("Iltimos, haqiqiy ko'rishlar sonini raqamda kiriting.");
+                  }
+                }}
+              >
+                Natijani Saqlash & Tekshirish
+              </Button>
+              {isEditing && (
+                <Button variant="ghost" onClick={() => setIsEditing(false)}>
+                  Bekor qilish
+                </Button>
+              )}
+            </div>
+          </div>
         ) : (
-          <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-            <Input
-              value={actual}
-              onChange={(e) => setActual(e.target.value)}
-              inputMode="numeric"
-              placeholder="Joylashtirilgandan keyingi haqiqiy ko‘rishlarni kiriting"
-              className="sm:max-w-xs"
-            />
-            <Button
-              variant="outline"
-              onClick={() => {
-                const v = Number(actual.replace(/\D/g, ""));
-                if (v > 0) setActualViews(analysis.id, v);
-              }}
-            >
-              Haqiqiy natijani qayd etish
-            </Button>
+          <div className="mt-4 flex items-center justify-between rounded-xl border border-border/70 bg-card/40 p-4">
+            <p className="text-sm text-muted-foreground">
+              {accuracy?.inRange
+                ? `✅ A'lo daraja! Haqiqiy natijangiz (${formatNumber(analysis.actualViews)}) bashorat qilingan oraliqqa (${formatNumber(p.estimated_view_min)} – ${formatNumber(p.estimated_view_max)}) to'liq mos tushdi.`
+                : `ℹ️ Haqiqiy natijangiz (${formatNumber(analysis.actualViews)}) kutilgan oraliqdan tashqarida bo'ldi. Bu modelni yanada aniqroq o'qitish uchun ishlatiladi.`}
+            </p>
           </div>
         )}
       </section>
@@ -553,4 +598,3 @@ function List({ title, items, tone }: { title: string; items: string[]; tone: st
     </div>
   );
 }
-
