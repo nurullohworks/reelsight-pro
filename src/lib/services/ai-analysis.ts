@@ -154,20 +154,23 @@ Iltimos, yuqoridagi JSON formatda Meta algoritmi bo'yicha tahlilni qaytaring.`
   }
 
   // 3. Fallback: Intelligent Meta-Algorithm Heuristic Engine
-  const watermarkPenalty = input.hasWatermark ? 28 : 0;
-  const baseSeed = Math.abs(hashString(input.fileName + (input.niche || "business"))) % 12 + 1;
+  return buildFallbackAnalysis(input);
+}
+
+function buildFallbackAnalysis(input: AiAnalysisInput): Analysis {
+  const baseSeed = (Math.abs(hashString(input.fileName + (input.niche || "business"))) % 12) + 1;
   const baseAnalysis = makeAnalysis(baseSeed, {
     id: `an_${Date.now()}`,
     fileName: input.fileName,
-    sizeBytes: input.sizeBytes,
-    niche: input.niche,
-    hasWatermark: input.hasWatermark,
+    ...(input.niche ? { niche: input.niche } : {}),
   });
 
   if (input.hasWatermark) {
-    baseAnalysis.overallScore = Math.max(35, baseAnalysis.overallScore - watermarkPenalty);
-    baseAnalysis.viralProbability = Math.max(20, baseAnalysis.viralProbability - 35);
-    baseAnalysis.riskFactors.unshift("Meta algoritmi TikTok/CapCut watermarki bo'lgan videolarni Explore-da 80% gacha cheklaydi.");
+    baseAnalysis.prediction.overall_score = Math.max(35, baseAnalysis.prediction.overall_score - 28);
+    baseAnalysis.prediction.viral_probability = Math.max(20, baseAnalysis.prediction.viral_probability - 35);
+    baseAnalysis.prediction.risk_factors.unshift(
+      "Meta algoritmi TikTok/CapCut watermarki bo'lgan videolarni Explore-da 80% gacha cheklaydi.",
+    );
   }
 
   return baseAnalysis;
