@@ -45,8 +45,8 @@ export class PaymentService {
    */
   static generateClickUrl(planId: PlanId, userId: string, returnUrl?: string): string {
     const plan = PLAN_PRICING[planId];
-    const serviceId = import.meta.env.VITE_CLICK_SERVICE_ID || "12345";
-    const merchantId = import.meta.env.VITE_CLICK_MERCHANT_ID || "67890";
+    const serviceId = import.meta.env['VITE_CLICK_SERVICE_ID'] || "12345";
+    const merchantId = import.meta.env['VITE_CLICK_MERCHANT_ID'] || "67890";
     const amount = plan.priceUzSum;
     const transId = `sub_${planId}_${userId || "anon"}_${Date.now()}`;
     const ret = returnUrl || window.location.origin + "/billing?payment=success";
@@ -59,7 +59,7 @@ export class PaymentService {
    */
   static generatePaymeUrl(planId: PlanId, userId: string, returnUrl?: string): string {
     const plan = PLAN_PRICING[planId];
-    const merchantId = import.meta.env.VITE_PAYME_MERCHANT_ID || "654321";
+    const merchantId = import.meta.env['VITE_PAYME_MERCHANT_ID'] || "654321";
     const amountInTiyin = plan.priceUzSum * 100;
     const orderId = `sub_${planId}_${userId || "anon"}_${Date.now()}`;
     const ret = returnUrl || window.location.origin + "/billing?payment=success";

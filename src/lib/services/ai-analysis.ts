@@ -60,13 +60,13 @@ JAVOB FORMATI: Faqat to'g'ridan-to'g'ri toza JSON obyekt qaytar (hech qanday mar
 
 export async function analyzeVideoWithAI(input: AiAnalysisInput): Promise<Analysis> {
   const geminiKey = input.apiKey || 
-    (typeof import.meta !== "undefined" && import.meta.env?.VITE_GEMINI_API_KEY) || 
-    (typeof process !== "undefined" && process.env?.GEMINI_API_KEY) || 
+    (typeof import.meta !== "undefined" && import.meta.env?.['VITE_GEMINI_API_KEY']) || 
+    (typeof process !== "undefined" && process.env?.['GEMINI_API_KEY']) || 
     localStorage.getItem("reelpredict_gemini_key");
 
   const claudeKey = 
-    (typeof import.meta !== "undefined" && import.meta.env?.VITE_ANTHROPIC_API_KEY) || 
-    (typeof process !== "undefined" && process.env?.ANTHROPIC_API_KEY) || 
+    (typeof import.meta !== "undefined" && import.meta.env?.['VITE_ANTHROPIC_API_KEY']) || 
+    (typeof process !== "undefined" && process.env?.['ANTHROPIC_API_KEY']) || 
     localStorage.getItem("reelpredict_claude_key");
 
   // 1. Agar Gemini API Key mavjud bo'lsa:

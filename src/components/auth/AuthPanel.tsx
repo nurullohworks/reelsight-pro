@@ -50,7 +50,7 @@ export function AuthPanel({ mode }: { mode: "login" | "signup" }) {
           return;
         } else {
           toast.success("Xush kelibsiz!");
-          signIn(email, data.user?.user_metadata?.full_name);
+          signIn(email, data.user?.user_metadata?.['full_name']);
           void navigate({ to: "/dashboard" });
           return;
         }

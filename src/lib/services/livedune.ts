@@ -119,7 +119,7 @@ export function getLiveDuneBenchmark(
     saveScore: number;
   }
 ): LiveDuneNicheBenchmark {
-  const nicheData = LIVEDUNE_DATASET[nicheKey] || LIVEDUNE_DATASET["business"];
+  const nicheData = LIVEDUNE_DATASET[nicheKey] || LIVEDUNE_DATASET["business"]!;
   const nicheInfo = LIVEDUNE_NICHES.find((n) => n.key === nicheKey) || LIVEDUNE_NICHES[0];
 
   const determineStatus = (curr: number, avg: number): "ahead" | "average" | "behind" => {
