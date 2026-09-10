@@ -20,7 +20,7 @@ Berilgan video parametrlari, nisha va metadatalar asosida Meta Reels reytinginin
 4. Save (saqlab olish) va foydalilik qiymati (Evergreen tarqatish).
 5. Pacing va montaj dinamikasi (har 2-3 soniyadagi o'zgarishlar, TikTok/CapCut logotiplari ta'siri).
 
-JAVOB FORMATI: Faqat to'g'ridan-to'g'ri toza JSON obyekt qaytar (hech qanday markdown ```json tegisiz):
+JAVOB FORMATI: Faqat to'g'ridan-to'g'ri toza JSON obyekt qaytar (hech qanday markdown kod bloki tegisiz):
 {
   "overall_score": 85,
   "hook_score": 88,
