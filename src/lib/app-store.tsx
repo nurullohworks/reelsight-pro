@@ -1,4 +1,4 @@
-﻿import {
+import {
   createContext,
   useCallback,
   useContext,
@@ -17,6 +17,17 @@ export interface AppUser {
   email: string;
 }
 
+export interface InstagramAccount {
+  handle: string;
+  followers: number;
+  avgReelViews: number;
+  avgEngagement: number;
+  growth: number;
+  consistency: number;
+  niche: string;
+  isConnected: boolean;
+}
+
 export const PLAN_LIMITS: Record<PlanId, number> = { free: 2, pro: 100, agency: 500 };
 
 interface AppState {
@@ -24,6 +35,7 @@ interface AppState {
   analyses: Analysis[];
   subscription: Subscription;
   instagramConnected: boolean;
+  instagramAccount: InstagramAccount | null;
 }
 
 interface AppStore extends AppState {
@@ -35,6 +47,8 @@ interface AppStore extends AppState {
   setPlan: (plan: PlanId, cycle?: "monthly" | "yearly") => void;
   cancelSubscription: () => void;
   toggleInstagram: () => void;
+  connectInstagram: (account: Partial<InstagramAccount>) => void;
+  disconnectInstagram: () => void;
   canAnalyze: boolean;
 }
 
@@ -50,9 +64,10 @@ const defaultState: AppState = {
     billingCycle: "monthly",
   },
   instagramConnected: false,
+  instagramAccount: null, // Boshida hech qanday akkaunt ulanmagan
 };
 
-const KEY = "reelpredict.state.v1";
+const KEY = "reelpredict.state.v3";
 const AppContext = createContext<AppStore | null>(null);
 
 export function AppStoreProvider({ children }: { children: ReactNode }) {
@@ -83,7 +98,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
               user: {
                 id: u.id,
                 email: u.email || "",
-                name: u.user_metadata?.['full_name'] || u.email?.split("@")[0] || "Creator",
+                name: u.user_metadata?.full_name || u.email?.split("@")[0] || "Creator",
               },
             }));
           }
@@ -97,7 +112,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
               user: {
                 id: u.id,
                 email: u.email || "",
-                name: u.user_metadata?.['full_name'] || u.email?.split("@")[0] || "Creator",
+                name: u.user_metadata?.full_name || u.email?.split("@")[0] || "Creator",
               },
             }));
           } else {
@@ -150,7 +165,6 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
       subscription: { ...s.subscription, usedThisMonth: s.subscription.usedThisMonth + 1 },
     }));
 
-    // Agar Supabase ulangan bo'lsa, DB-ga ham saqlash
     try {
       if (supabase) {
         await supabase.from("reel_analyses").insert({
@@ -199,6 +213,33 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
     [],
   );
 
+  const connectInstagram = useCallback((account: Partial<InstagramAccount>) => {
+    const handle = account.handle?.startsWith("@") ? account.handle : `@${account.handle || "my.instagram"}`;
+    const newAcc: InstagramAccount = {
+      handle,
+      followers: account.followers || 3000,
+      avgReelViews: account.avgReelViews || 1500,
+      avgEngagement: account.avgEngagement || 4.8,
+      growth: account.growth || 11.2,
+      consistency: account.consistency || 85,
+      niche: account.niche || "business",
+      isConnected: true,
+    };
+    setState((s) => ({
+      ...s,
+      instagramConnected: true,
+      instagramAccount: newAcc,
+    }));
+  }, []);
+
+  const disconnectInstagram = useCallback(() => {
+    setState((s) => ({
+      ...s,
+      instagramConnected: false,
+      instagramAccount: null,
+    }));
+  }, []);
+
   const value = useMemo<AppStore>(
     () => ({
       ...state,
@@ -210,6 +251,8 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
       setPlan,
       cancelSubscription,
       toggleInstagram,
+      connectInstagram,
+      disconnectInstagram,
       canAnalyze: state.subscription.usedThisMonth < state.subscription.monthlyLimit,
     }),
     [
@@ -222,6 +265,8 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
       setPlan,
       cancelSubscription,
       toggleInstagram,
+      connectInstagram,
+      disconnectInstagram,
     ],
   );
 
