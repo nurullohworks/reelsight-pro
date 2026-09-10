@@ -1,11 +1,11 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Check, Film, Loader2, Sparkles, UploadCloud, ShieldAlert, Cpu } from "lucide-react";
+import { Check, Film, Loader2, Sparkles, UploadCloud, ShieldAlert, Cpu, Instagram, Sliders } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { UpgradeModal } from "@/components/app/UpgradeModal";
 import { Button } from "@/components/ui/button";
-import { useAppStore } from "@/lib/app-store";
+import { formatNumber, useAppStore } from "@/lib/app-store";
 import { ANALYSIS_STEPS, LIVEDUNE_NICHES, videoAnalysisService } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
@@ -25,19 +25,22 @@ export const Route = createFileRoute("/analyze")({
 });
 
 function Analyze() {
-  const { canAnalyze, addAnalysis } = useAppStore();
+  const { canAnalyze, addAnalysis, instagramAccount } = useAppStore();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [niche, setNiche] = useState("business");
+  const [durationSec, setDurationSec] = useState<number>(20);
+  const [niche, setNiche] = useState(instagramAccount?.niche || "business");
   const [hasWatermark, setHasWatermark] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [step, setStep] = useState(-1);
   const [upgradeOpen, setUpgradeOpen] = useState(false);
 
+  const baselineViews = instagramAccount?.avgReelViews || 2000;
+
   const pick = (f: File | undefined) => {
     if (!f) return;
-    if (!/\.(mp4|mov)$/i.test(f.name)) {
+    if (!/\.(mp4|mov|webm|m4v)$/i.test(f.name)) {
       toast.error("Qo'llab-quvvatlanmaydigan format", { description: "MP4 yoki MOV faylini yuklang." });
       return;
     }
@@ -46,6 +49,24 @@ function Analyze() {
       return;
     }
     setFile(f);
+
+    try {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+      const blobUrl = URL.createObjectURL(f);
+      video.src = blobUrl;
+      video.onloadedmetadata = () => {
+        URL.revokeObjectURL(blobUrl);
+        if (video.duration && !isNaN(video.duration) && isFinite(video.duration)) {
+          setDurationSec(Math.round(video.duration));
+        }
+      };
+      video.onerror = () => {
+        URL.revokeObjectURL(blobUrl);
+      };
+    } catch (e) {
+      // default duration
+    }
   };
 
   const run = async () => {
@@ -54,18 +75,31 @@ function Analyze() {
       setUpgradeOpen(true);
       return;
     }
-    for (let i = 0; i < ANALYSIS_STEPS.length; i++) {
-      setStep(i);
-      await new Promise((r) => setTimeout(r, 650));
+    
+    try {
+      for (let i = 0; i < ANALYSIS_STEPS.length; i++) {
+        setStep(i);
+        await new Promise((r) => setTimeout(r, 600));
+      }
+
+      const analysis = await videoAnalysisService.analyze({
+        fileName: file.name,
+        sizeBytes: file.size,
+        durationSec: durationSec || 20,
+        niche,
+        hasWatermark,
+        accountAvgViews: baselineViews,
+        accountHandle: instagramAccount?.handle,
+      });
+
+      await addAnalysis(analysis);
+      toast.success("Tahlil yakunlandi!", { description: `${file.name} bo'yicha aniq hisobot tayyorlandi.` });
+      void navigate({ to: "/reports/$id", params: { id: analysis.id } });
+    } catch (err: any) {
+      console.error("Video tahlil xatosi:", err);
+      toast.error("Tahlilda xatolik yuz berdi", { description: err?.message || "Iltimos qayta urinib ko'ring." });
+      setStep(-1);
     }
-    const analysis = await videoAnalysisService.analyze({
-      fileName: file.name,
-      sizeBytes: file.size,
-      niche,
-      hasWatermark,
-    });
-    addAnalysis(analysis);
-    void navigate({ to: "/reports/$id", params: { id: analysis.id } });
   };
 
   const running = step >= 0;
@@ -81,6 +115,33 @@ function Analyze() {
         <p className="mt-2 text-muted-foreground">
           Reels-ingizni nashr etishdan oldin tekshiring: Meta algoritmi uni Explore-ga chiqaradimi yoki bloklaydimi?
         </p>
+
+        {/* Instagram Account Connection Banner */}
+        <div className="mt-5 flex items-center justify-between rounded-xl border border-primary/30 bg-primary/5 p-4 text-xs">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-tr from-yellow-500 via-rose-500 to-purple-600 text-white shadow-sm">
+              <Instagram className="h-4 w-4" />
+            </div>
+            <div>
+              <p className="font-semibold text-foreground">
+                {instagramAccount?.isConnected
+                  ? `Ulangan Akkaunt: ${instagramAccount.handle}`
+                  : "Instagram akkaunt ulanmagan"}
+              </p>
+              <p className="text-muted-foreground text-[11px]">
+                {instagramAccount?.isConnected
+                  ? `Bashorat sizning o'rtacha ${formatNumber(instagramAccount.avgReelViews)} ko'rishingizga moslashtirilgan.`
+                  : "Aniqroq natija uchun akkauntingizni ulab qo'ying."}
+              </p>
+            </div>
+          </div>
+          <Button asChild size="sm" variant="outline" className="h-8 text-xs">
+            <Link to="/accounts">
+              <Sliders className="mr-1.5 h-3.5 w-3.5" />
+              {instagramAccount?.isConnected ? "Moslash" : "Akkauntni Ulash"}
+            </Link>
+          </Button>
+        </div>
 
         {!running ? (
           <>
@@ -132,11 +193,13 @@ function Analyze() {
                 {file ? <Film className="h-6 w-6 text-primary" /> : <UploadCloud className="h-6 w-6 text-primary" />}
               </div>
               <p className="mt-5 text-lg font-medium">{file ? file.name : "Reels-ingizni shu yerga tashlang"}</p>
-              <p className="mt-2 text-xs text-muted-foreground">Qo'llab-quvvatlanadi: MP4, MOV · Maksimal hajm: 500MB</p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {file ? `${(file.size / (1024 * 1024)).toFixed(1)} MB · ${durationSec} soniya` : "Qo'llab-quvvatlanadi: MP4, MOV, WebM · Maksimal hajm: 500MB"}
+              </p>
               <input
                 ref={inputRef}
                 type="file"
-                accept="video/mp4,video/quicktime"
+                accept="video/mp4,video/quicktime,video/webm"
                 className="hidden"
                 onChange={(e) => pick(e.target.files?.[0])}
               />
@@ -163,7 +226,7 @@ function Analyze() {
               Algoritmik Tahlilni Boshlash (Uchish / Uchmaslikni aniqlash)
             </Button>
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Tahlil Meta Reels 2024-2026 ranking signallari (Sends/Reach, 3s Hook retention, Loop factor) va LiveDune bozor ma'lumotlariga tayanadi.
+              Tahlil Meta Reels ranking signallari (Sends/Reach, 3s Hook retention, Loop factor) va sizning akkauntingiz ko'rsatkichlari asosida hisoblanadi.
             </p>
           </>
         ) : (
@@ -171,8 +234,8 @@ function Analyze() {
             <div className="flex items-center gap-3">
               <Loader2 className="h-5 w-5 animate-spin text-primary" />
               <div>
-                <p className="text-sm font-semibold text-foreground">{file?.name}</p>
-                <p className="text-xs text-muted-foreground">Meta algoritmi va LiveDune benchmarklari solishtirilmoqda...</p>
+                <p className="text-sm font-semibold text-foreground">{file?.name} ({(file!.size / (1024 * 1024)).toFixed(1)} MB)</p>
+                <p className="text-xs text-muted-foreground">Meta algoritmi va akkauntingiz benchmarklari solishtirilmoqda...</p>
               </div>
             </div>
             <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-muted">
@@ -208,4 +271,3 @@ function Analyze() {
     </AppShell>
   );
 }
-
