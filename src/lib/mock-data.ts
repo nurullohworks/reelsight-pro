@@ -146,7 +146,7 @@ export function makeAnalysis(seed = 0, overrides: Partial<Analysis> = {}): Analy
       { metric: "Saves", reel: saveScore, accountAvg: 64, benchmark: 77 },
       { metric: "Views", reel: overall, accountAvg: 70, benchmark: 82 },
     ],
-    actualViews: seed % 3 === 0 ? 31400 : undefined,
+    actualViews: undefined,
     verdict: {
       state: metaEval.verdict === "UCHADI" ? "Ready to post" : metaEval.verdict === "O'RTACHA" ? "Ready with improvements" : "Needs work",
       algorithmVerdict: metaEval.verdict,
