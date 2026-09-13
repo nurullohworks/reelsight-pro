@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { Check, Film, Loader2, Sparkles, UploadCloud, ShieldAlert, Cpu, Instagram, Sliders } from "lucide-react";
+import { Check, Film, Loader2, Sparkles, UploadCloud, ShieldAlert, Cpu, Instagram, Sliders, Flame } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { UpgradeModal } from "@/components/app/UpgradeModal";
@@ -12,12 +12,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/analyze")({
   head: () => ({
     meta: [
-      { title: "Meta & LiveDune Algoritmik Tahlil — REELPREDICT" },
+      { title: "Video Tahlili — NEXREEL AI" },
       {
         name: "description",
         content: "Reels yuklang va Meta reyting algoritmi hamda LiveDune benchmarklari asosida videoning uchish/uchmasligini aniqlang.",
       },
-      { property: "og:title", content: "Meta & LiveDune Algoritmik Tahlil — REELPREDICT" },
+      { property: "og:title", content: "Video Tahlili — NEXREEL AI" },
       { property: "og:description", content: "Reels-ingizni yuklang va Meta algoritmi bo'yicha aniq kamchiliklarni oling." },
     ],
   }),
@@ -93,7 +93,7 @@ function Analyze() {
       });
 
       await addAnalysis(analysis);
-      toast.success("Tahlil yakunlandi!", { description: `${file.name} bo'yicha aniq hisobot tayyorlandi.` });
+      toast.success("Tahlil muvaffaqiyatli yakunlandi!", { description: `${file.name} bo'yicha to'liq hisobot tayyorlandi.` });
       void navigate({ to: "/reports/$id", params: { id: analysis.id } });
     } catch (err: any) {
       console.error("Video tahlil xatosi:", err);
@@ -107,35 +107,35 @@ function Analyze() {
   return (
     <AppShell>
       <div className="mx-auto max-w-3xl">
-        <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-primary uppercase">
+        <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-cyan-400 uppercase">
           <Cpu className="h-4 w-4" />
           <span>Meta Reels Algoritmi & LiveDune Dvigateli</span>
         </div>
-        <h1 className="mt-2 text-3xl font-bold tracking-tight">Algoritmik Video Diagnostikasi</h1>
-        <p className="mt-2 text-muted-foreground">
+        <h1 className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">Algoritmik Video Diagnostikasi</h1>
+        <p className="mt-1.5 text-xs sm:text-sm text-muted-foreground">
           Reels-ingizni nashr etishdan oldin tekshiring: Meta algoritmi uni Explore-ga chiqaradimi yoki bloklaydimi?
         </p>
 
-        {/* Instagram Account Connection Banner */}
-        <div className="mt-5 flex items-center justify-between rounded-xl border border-primary/30 bg-primary/5 p-4 text-xs">
+        {/* Instagram Account Connection Badge */}
+        <div className="mt-5 flex items-center justify-between rounded-2xl border border-cyan-500/25 bg-gradient-to-r from-cyan-500/10 via-background to-emerald-500/5 p-4 text-xs backdrop-blur-md shadow-sm">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-tr from-yellow-500 via-rose-500 to-purple-600 text-white shadow-sm">
-              <Instagram className="h-4 w-4" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-yellow-500 via-rose-500 to-purple-600 text-white shadow-md">
+              <Instagram className="h-5 w-5" />
             </div>
             <div>
-              <p className="font-semibold text-foreground">
+              <p className="font-bold text-foreground">
                 {instagramAccount?.isConnected
                   ? `Ulangan Akkaunt: ${instagramAccount.handle}`
                   : "Instagram akkaunt ulanmagan"}
               </p>
-              <p className="text-muted-foreground text-[11px]">
+              <p className="text-muted-foreground text-[11px] mt-0.5">
                 {instagramAccount?.isConnected
                   ? `Bashorat sizning o'rtacha ${formatNumber(instagramAccount.avgReelViews)} ko'rishingizga moslashtirilgan.`
-                  : "Aniqroq natija uchun akkauntingizni ulab qo'ying."}
+                  : "Natija aniqroq bo'lishi uchun akkauntingizni ulab qo'ying."}
               </p>
             </div>
           </div>
-          <Button asChild size="sm" variant="outline" className="h-8 text-xs">
+          <Button asChild size="sm" variant="outline" className="h-8 text-xs shrink-0 border-cyan-500/30 hover:bg-cyan-500/10 text-cyan-300">
             <Link to="/accounts">
               <Sliders className="mr-1.5 h-3.5 w-3.5" />
               {instagramAccount?.isConnected ? "Moslash" : "Akkauntni Ulash"}
@@ -146,12 +146,12 @@ function Analyze() {
         {!running ? (
           <>
             {/* Niche Selector */}
-            <div className="mt-6 rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-primary" />
+            <div className="mt-6 rounded-2xl border border-border/80 bg-card/60 p-5 backdrop-blur-sm">
+              <label className="text-xs font-bold uppercase tracking-wider text-foreground flex items-center gap-2">
+                <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
                 Sohangizni (Nishani) tanlang (LiveDune bozor benchmarki uchun):
               </label>
-              <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <div className="mt-3.5 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                 {LIVEDUNE_NICHES.map((n) => (
                   <button
                     key={n.key}
@@ -160,8 +160,8 @@ function Analyze() {
                     className={cn(
                       "flex flex-col items-start rounded-xl border p-3 text-left text-xs transition-all",
                       niche === n.key
-                        ? "border-primary bg-primary/10 text-primary font-medium shadow-sm ring-1 ring-primary/30"
-                        : "border-border bg-muted/30 text-muted-foreground hover:bg-muted/70 hover:text-foreground",
+                        ? "border-cyan-500/60 bg-cyan-500/10 text-cyan-300 font-bold shadow-sm ring-1 ring-cyan-500/30"
+                        : "border-border/70 bg-surface/40 text-muted-foreground hover:bg-surface hover:text-foreground",
                     )}
                   >
                     <span className="font-semibold">{n.name}</span>
@@ -185,16 +185,18 @@ function Analyze() {
               }}
               onClick={() => inputRef.current?.click()}
               className={cn(
-                "mt-6 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-border-strong bg-surface/50 px-6 py-16 text-center transition-all",
-                dragging && "border-primary bg-primary/5",
+                "mt-6 flex cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-border/80 bg-surface/30 px-6 py-14 text-center transition-all hover:border-cyan-500/50 hover:bg-cyan-500/5 group",
+                dragging && "border-cyan-400 bg-cyan-500/10 scale-[1.01]",
               )}
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-muted">
-                {file ? <Film className="h-6 w-6 text-primary" /> : <UploadCloud className="h-6 w-6 text-primary" />}
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 shadow-lg shadow-cyan-500/10 group-hover:scale-110 transition-transform">
+                {file ? <Film className="h-7 w-7 text-emerald-400" /> : <UploadCloud className="h-7 w-7 text-cyan-400" />}
               </div>
-              <p className="mt-5 text-lg font-medium">{file ? file.name : "Reels-ingizni shu yerga tashlang"}</p>
-              <p className="mt-2 text-xs text-muted-foreground">
-                {file ? `${(file.size / (1024 * 1024)).toFixed(1)} MB · ${durationSec} soniya` : "Qo'llab-quvvatlanadi: MP4, MOV, WebM · Maksimal hajm: 500MB"}
+              <p className="mt-4 text-base sm:text-lg font-bold text-foreground">
+                {file ? file.name : "Reels videongizni shu yerga tashlang"}
+              </p>
+              <p className="mt-1.5 text-xs text-muted-foreground font-mono">
+                {file ? `${(file.size / (1024 * 1024)).toFixed(1)} MB · ${durationSec} soniya` : "Qo'llab-quvvatlanadi: MP4, MOV, WebM · Maksimal: 500MB"}
               </p>
               <input
                 ref={inputRef}
@@ -209,58 +211,64 @@ function Analyze() {
             <div className="mt-4 flex items-center justify-between rounded-xl border border-border/70 bg-card/40 px-4 py-3 text-xs">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="h-4 w-4 text-warning" />
-                <span className="text-muted-foreground">Videoda TikTok yoki CapCut logotipi (suv belgisi) bormi?</span>
+                <span className="text-muted-foreground font-medium">Videoda TikTok yoki CapCut suv belgisi (watermark) bormi?</span>
               </div>
-              <label className="flex items-center gap-2 cursor-pointer">
+              <label className="flex items-center gap-2 cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={hasWatermark}
                   onChange={(e) => setHasWatermark(e.target.checked)}
-                  className="rounded border-border text-primary focus:ring-primary h-4 w-4"
+                  className="rounded border-border text-cyan-500 focus:ring-cyan-500 h-4 w-4 bg-background"
                 />
-                <span className="font-medium text-foreground">{hasWatermark ? "Ha (jazo hisoblanadi)" : "Yo'q (toza)"}</span>
+                <span className="font-semibold text-foreground">{hasWatermark ? "Ha (jazolanadi)" : "Yo'q (toza)"}</span>
               </label>
             </div>
 
-            <Button className="mt-6 w-full py-6 text-base font-semibold shadow-lg shadow-primary/20" size="lg" disabled={!file} onClick={() => void run()}>
-              Algoritmik Tahlilni Boshlash (Uchish / Uchmaslikni aniqlash)
+            <Button
+              className="mt-6 w-full py-6 text-base font-extrabold shadow-xl shadow-cyan-500/20 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:opacity-95 text-slate-950 transition-all active:scale-[0.99]"
+              size="lg"
+              disabled={!file}
+              onClick={() => void run()}
+            >
+              <Flame className="mr-2 h-5 w-5" />
+              Virallikni Tahlil Qilish (Meta 5 Drayveri)
             </Button>
-            <p className="mt-4 text-center text-xs text-muted-foreground">
+            <p className="mt-3.5 text-center text-[11px] text-muted-foreground leading-relaxed">
               Tahlil Meta Reels ranking signallari (Sends/Reach, 3s Hook retention, Loop factor) va sizning akkauntingiz ko'rsatkichlari asosida hisoblanadi.
             </p>
           </>
         ) : (
-          <div className="surface-card mt-8 p-8 border border-border/80 shadow-xl rounded-2xl">
-            <div className="flex items-center gap-3">
-              <Loader2 className="h-5 w-5 animate-spin text-primary" />
+          <div className="surface-card mt-8 p-8 border border-cyan-500/30 shadow-2xl rounded-2xl bg-card/90">
+            <div className="flex items-center gap-3.5">
+              <Loader2 className="h-6 w-6 animate-spin text-cyan-400" />
               <div>
-                <p className="text-sm font-semibold text-foreground">{file?.name} ({(file!.size / (1024 * 1024)).toFixed(1)} MB)</p>
-                <p className="text-xs text-muted-foreground">Meta algoritmi va akkauntingiz benchmarklari solishtirilmoqda...</p>
+                <p className="text-sm font-bold text-foreground">{file?.name} ({(file!.size / (1024 * 1024)).toFixed(1)} MB)</p>
+                <p className="text-xs text-muted-foreground mt-0.5">Meta algoritmi va akkauntingiz benchmarklari tahlil qilinmoqda...</p>
               </div>
             </div>
-            <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-muted">
+            <div className="mt-6 h-2 w-full overflow-hidden rounded-full bg-muted/60">
               <div
-                className="h-full rounded-full bg-primary transition-[width] duration-500 shadow-sm"
+                className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 transition-[width] duration-500 shadow-sm"
                 style={{ width: `${((step + 1) / ANALYSIS_STEPS.length) * 100}%` }}
               />
             </div>
-            <ol className="mt-8 space-y-4">
+            <ol className="mt-8 space-y-3.5">
               {ANALYSIS_STEPS.map((label, i) => (
-                <li key={label} className="flex items-center gap-3 text-sm">
+                <li key={label} className="flex items-center gap-3 text-xs sm:text-sm">
                   <span
                     className={cn(
-                      "flex h-6 w-6 items-center justify-center rounded-md border font-mono text-[10px] font-semibold",
-                      i < step && "border-success/40 bg-success/10 text-success",
-                      i === step && "border-primary/50 bg-primary/10 text-primary animate-pulse",
-                      i > step && "border-border text-muted-foreground",
+                      "flex h-6 w-6 items-center justify-center rounded-lg border font-mono text-[10px] font-bold",
+                      i < step && "border-emerald-500/50 bg-emerald-500/10 text-emerald-400",
+                      i === step && "border-cyan-500/60 bg-cyan-500/20 text-cyan-300 animate-pulse",
+                      i > step && "border-border/70 text-muted-foreground",
                     )}
                   >
                     {i < step ? <Check className="h-3.5 w-3.5" /> : String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className={cn(i <= step ? "text-foreground font-medium" : "text-muted-foreground")}>
+                  <span className={cn(i <= step ? "text-foreground font-semibold" : "text-muted-foreground")}>
                     {label}
                   </span>
-                  {i === step ? <span className="shimmer ml-auto h-1.5 w-24 rounded-full" /> : null}
+                  {i === step ? <span className="shimmer ml-auto h-1.5 w-20 rounded-full" /> : null}
                 </li>
               ))}
             </ol>

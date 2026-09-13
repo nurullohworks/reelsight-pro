@@ -32,12 +32,12 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/reports/$id")({
   head: () => ({
     meta: [
-      { title: "Meta & LiveDune Algoritmik Hisobot — REELPREDICT" },
+      { title: "Meta & LiveDune Algoritmik Hisobot — NEXREEL AI" },
       {
         name: "description",
         content: "Meta reyting algoritmi va LiveDune bozor benchmarklari asosidagi to'liq virallik diagnostikasi hisoboti.",
       },
-      { property: "og:title", content: "Meta & LiveDune Algoritmik Hisobot — REELPREDICT" },
+      { property: "og:title", content: "Meta & LiveDune Algoritmik Hisobot — NEXREEL AI" },
       { property: "og:description", content: "Instagram Reel’ingiz uchun aniq algoritmik tahlil va kamchiliklar hisoboti." },
     ],
   }),
@@ -598,3 +598,4 @@ function List({ title, items, tone }: { title: string; items: string[]; tone: st
     </div>
   );
 }
+

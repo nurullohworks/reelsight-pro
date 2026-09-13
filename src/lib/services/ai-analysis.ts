@@ -175,6 +175,7 @@ Iltimos, yuqoridagi JSON formatda tahlilni to'liq qaytaring.`
     fileName: input.fileName,
     durationSec: duration,
     niche: niche,
+    actualViews: undefined,
   });
 
   // Akkaunt ko'rishlariga moslashtirilgan mutanosiblik
@@ -193,7 +194,7 @@ Iltimos, yuqoridagi JSON formatda tahlilni to'liq qaytaring.`
     baseAnalysis.prediction.viral_probability = Math.max(15, baseAnalysis.prediction.viral_probability - 35);
     baseAnalysis.prediction.estimated_view_min = Math.round(baselineViews * 0.25);
     baseAnalysis.prediction.estimated_view_max = Math.round(baselineViews * 0.65);
-    baseAnalysis.prediction.risk_factors.unshift("TikTok/CapCut suv belgisi aniqlandi — Meta algoritmi tarqatishni 80% gacha cheklaydi.");
+    baseAnalysis.prediction.risk_factors.unshift("TikTok/CapCut suv belgisi aniqlandi вЂ” Meta algoritmi tarqatishni 80% gacha cheklaydi.");
     baseAnalysis.verdict.algorithmVerdict = "UCHMAYDI";
     baseAnalysis.verdict.summary = "Watermark sababli Meta algoritmi ushbu videoni Explore sahifasiga chiqarmaydi. Logotipni olib tashlang.";
   }
@@ -294,6 +295,7 @@ function buildCompleteAnalysis(parsed: any, input: AiAnalysisInput): Analysis {
     durationSec,
     status: "Analyzed",
     niche,
+    actualViews: undefined,
     metaAlgorithm: metaEval.breakdown,
     liveDuneBenchmark,
     exactDeficiencies: metaEval.exactDeficiencies,

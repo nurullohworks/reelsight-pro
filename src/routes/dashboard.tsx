@@ -19,12 +19,12 @@ import { accountSnapshot } from "@/lib/mock-data";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Boshqaruv paneli — REELPREDICT" },
+      { title: "Boshqaruv Paneli — NEXREEL AI" },
       {
         name: "description",
         content: "Reels samaradorligini tahlil qilish maydoni: ballar, tendentsiyalar va AI xulosalari.",
       },
-      { property: "og:title", content: "Boshqaruv paneli — REELPREDICT" },
+      { property: "og:title", content: "Boshqaruv Paneli — NEXREEL AI" },
       { property: "og:description", content: "Bashorat ballarini, aniqlikni va so'nggi tahlillarni kuzating." },
     ],
   }),

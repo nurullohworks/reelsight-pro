@@ -3,27 +3,13 @@ import { cn } from "@/lib/utils";
 
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={cn("h-8 w-8", className)} aria-hidden="true">
-      <defs>
-        <linearGradient id="rp-mark" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="oklch(0.68 0.2 292)" />
-          <stop offset="100%" stopColor="oklch(0.6 0.16 255)" />
-        </linearGradient>
-      </defs>
-      <rect x="1" y="1" width="30" height="30" rx="9" fill="url(#rp-mark)" opacity="0.16" />
-      <rect
-        x="1"
-        y="1"
-        width="30"
-        height="30"
-        rx="9"
-        fill="none"
-        stroke="url(#rp-mark)"
-        strokeWidth="1.5"
-      />
-      <path d="M9 22.5 L13.5 14 L18 18.5 L23 9.5" fill="none" stroke="url(#rp-mark)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M13.5 9 L19.5 12.4 L13.5 15.8 Z" fill="url(#rp-mark)" opacity="0.9" />
-    </svg>
+    <div className={cn("relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-400 p-0.5 shadow-lg shadow-cyan-500/20", className)}>
+      <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-background/90 backdrop-blur-sm">
+        <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-cyan-400 stroke-[2.5]" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" className="fill-cyan-400/20" />
+        </svg>
+      </div>
+    </div>
   );
 }
 
@@ -35,18 +21,23 @@ export function Logo({
   className?: string;
 }) {
   return (
-    <Link to="/" className={cn("flex items-center gap-3", className)}>
+    <Link to="/" className={cn("flex items-center gap-2.5 group transition-transform active:scale-95", className)}>
       <LogoMark />
-      <span className="flex flex-col leading-none">
-        <span className="text-[15px] font-semibold tracking-[0.14em] text-foreground">
-          REELPREDICT
-        </span>
+      <div className="flex flex-col leading-none">
+        <div className="flex items-center gap-1.5">
+          <span className="text-base font-extrabold tracking-tight text-foreground group-hover:text-primary transition-colors">
+            NEXREEL
+          </span>
+          <span className="rounded-md bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 px-1.5 py-0.5 text-[10px] font-mono font-bold text-cyan-400 border border-cyan-500/30">
+            AI
+          </span>
+        </div>
         {withTagline ? (
-          <span className="mt-1 text-[11px] text-muted-foreground">
-            AI asosidagi Instagram samaradorlik intellekti
+          <span className="mt-1 text-[11px] text-muted-foreground font-medium">
+            Meta Reels Algoritmi & Virallik Diagnostikasi
           </span>
         ) : null}
-      </span>
+      </div>
     </Link>
   );
 }

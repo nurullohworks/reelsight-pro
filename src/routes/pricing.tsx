@@ -1,4 +1,4 @@
-﻿import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
@@ -12,13 +12,13 @@ import { PaymentModal } from "@/components/app/PaymentModal";
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Narxlar вЂ” REELPREDICT" },
+      { title: "Tariflar & Narxlar — NEXREEL AI" },
       {
         name: "description",
         content:
-          "Instagram samaradorlik tahlili uchun qulay narxlar: Bepul, Pro вЂ” 190,000 so'm/oy va Agency вЂ” 490,000 so'm/oy.",
+          "Instagram samaradorlik tahlili uchun qulay narxlar: Bepul, Pro — 190,000 so'm/oy va Agency — 490,000 so'm/oy.",
       },
-      { property: "og:title", content: "REELPREDICT Narxlari" },
+      { property: "og:title", content: "NEXREEL AI Tariflari" },
       {
         property: "og:description",
         content: "AI asosidagi Reels samaradorligini bashorat qilish uchun Bepul, Pro va Agency tariflari.",

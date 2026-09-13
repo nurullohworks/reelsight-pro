@@ -36,12 +36,12 @@ import { LIVEDUNE_NICHES } from "@/lib/services";
 export const Route = createFileRoute("/accounts")({
   head: () => ({
     meta: [
-      { title: "Instagram Akkaunt Ulash & Tahlili — REELPREDICT" },
+      { title: "Instagram Akkaunt Ulash — NEXREEL AI" },
       {
         name: "description",
         content: "Instagram akkauntingizni ulang va Reels bashoratlari aniqligini 95%+ ga oshiring.",
       },
-      { property: "og:title", content: "Instagram Akkaunt Ulash — REELPREDICT" },
+      { property: "og:title", content: "Instagram Akkaunt Ulash — NEXREEL AI" },
       { property: "og:description", content: "Akkauntingizning real qamrovi va LiveDune benchmarklari bilan kalibratsiyalash." },
     ],
   }),
@@ -67,6 +67,7 @@ function Panel({ title, children }: { title: string; children: React.ReactNode }
 function Accounts() {
   const { instagramAccount, connectInstagram, disconnectInstagram } = useAppStore();
 
+  // Form states
   const [handle, setHandle] = useState("");
   const [followers, setFollowers] = useState<string>("");
   const [avgViews, setAvgViews] = useState<string>("");
@@ -126,6 +127,7 @@ function Accounts() {
 
   return (
     <AppShell>
+      {/* Top Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-primary uppercase">
@@ -140,6 +142,7 @@ function Accounts() {
       </div>
 
       {!isConnected ? (
+        /* рџљЂ UNCONNECTED EMPTY STATE + DIRECT CONNECT FORM */
         <div className="mt-8 grid gap-8 lg:grid-cols-12 items-start">
           <div className="lg:col-span-7 rounded-2xl border border-border bg-card/60 p-7 backdrop-blur-md shadow-xl">
             <div className="flex items-center gap-3">
@@ -159,14 +162,16 @@ function Accounts() {
                 <Label htmlFor="ig-handle" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Instagram Username (Profilingiz nomi)
                 </Label>
-                <Input
-                  id="ig-handle"
-                  value={handle}
-                  onChange={(e) => setHandle(e.target.value)}
-                  placeholder="@sizning_profilingiz"
-                  className="bg-background text-base font-medium"
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    id="ig-handle"
+                    value={handle}
+                    onChange={(e) => setHandle(e.target.value)}
+                    placeholder="@sizning_profilingiz"
+                    className="bg-background text-base font-medium"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -218,7 +223,7 @@ function Accounts() {
                 >
                   {LIVEDUNE_NICHES.map((n) => (
                     <option key={n.key} value={n.key}>
-                      {n.name} — {n.description}
+                      {n.name} вЂ” {n.description}
                     </option>
                   ))}
                 </select>
@@ -243,7 +248,7 @@ function Accounts() {
               <ul className="mt-4 space-y-3 text-xs text-muted-foreground leading-relaxed">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span><strong>Aniq bashorat:</strong> Videoning ko'rishi havoday olinmaydi, sizning 1.9K ko'rishingizga mos 1.5K-3.2K oralig'ida aniq beriladi.</span>
+                  <span><strong>Aniq bashorat:</strong> Videoning ko'rishi 22K-55K deb havoday olinmaydi, sizning 1.9K ko'rishingizga mos 1.5K-3.2K oralig'ida aniq beriladi.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -251,14 +256,16 @@ function Accounts() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span><strong>Istalgan payt o'zgartirish:</strong> Akkaunt ko'rsatkichlarini xohlagan payt yangilashingiz mumkin.</span>
+                  <span><strong>Istalgan payt o'zgartirish:</strong> Yangi video yuklaganda akkaunt ko'rsatkichlarini yangilab borishingiz mumkin.</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       ) : (
+        /* вњ… CONNECTED ACTIVE STATE */
         <div className="mt-6 space-y-6">
+          {/* Active Account Banner */}
           <div className="rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-card to-emerald-950/10 p-6 shadow-lg">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-4">
@@ -308,6 +315,7 @@ function Accounts() {
             </div>
           </div>
 
+          {/* Stats Cards */}
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
             <StatCard label="Obunachilar" value={formatNumber(a!.followers)} hint="Auditoriya bazasi" />
             <StatCard label="O'rtacha Reels Ko'rishi" value={formatNumber(a!.avgReelViews)} hint="Kalibratsiya asosi" />
@@ -316,6 +324,7 @@ function Accounts() {
             <StatCard label="Bashorat Aniqligi" value="95.2%" hint="Yuqori aniqlikda faol" />
           </div>
 
+          {/* Dynamic Charts */}
           <div className="grid gap-4 lg:grid-cols-2">
             <Panel title="Vaqt bo'yicha ko'rishlar dinamikasi">
               <ResponsiveContainer width="100%" height="100%">

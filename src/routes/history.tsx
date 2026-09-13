@@ -17,12 +17,12 @@ import type { AnalysisStatus } from "@/lib/types";
 export const Route = createFileRoute("/history")({
   head: () => ({
     meta: [
-      { title: "Tahlillar tarixi — REELPREDICT" },
+      { title: "Tahlillar Tarixi — NEXREEL AI" },
       {
         name: "description",
         content: "Har bir tahlil qilingan Reels — ball, taxminiy ko'rishlar, haqiqiy ko'rishlar va bashorat aniqligi bilan.",
       },
-      { property: "og:title", content: "Tahlillar tarixi — REELPREDICT" },
+      { property: "og:title", content: "Tahlillar Tarixi — NEXREEL AI" },
       { property: "og:description", content: "O'tgan Reels bashoratlaringizni qidiring, saralang va tekshiring." },
     ],
   }),
