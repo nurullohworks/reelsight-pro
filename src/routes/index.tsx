@@ -1,280 +1,200 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Activity,
-  BarChart3,
-  Flame,
-  ShieldCheck,
   Sparkles,
   Upload,
   Zap,
   CheckCircle2,
+  AlertCircle,
+  Scan,
+  Layers,
+  Flame,
+  ShieldCheck,
   Cpu,
+  Video,
+  Play,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Button } from "@/components/ui/button";
-import { MetricBar } from "@/components/data/MetricBar";
-import { ScoreRing } from "@/components/data/ScoreRing";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "NEXREEL AI — Instagram Reels Virallik & Algoritmik Tahlili" },
+      { title: "NEXREEL AI — Instagram Reels Kadr-ba-Kadr Neyron Audit" },
       {
         name: "description",
         content:
-          "Reels videongizni yuklang. NEXREEL AI Meta algoritmi (DM Shares, 3s Hook, Loop) va LiveDune benchmarklari asosida videoning uchish yoki uchmasligini joylashdan oldin aniqlaydi.",
+          "Reels videongizdagi xatoliklarni soniyalar va kadrlar bo'yicha skrinshot bilan aniqlang. Meta reyting algoritmi bo'yicha to'liq diagnostika.",
       },
-      { property: "og:title", content: "NEXREEL AI — Joylashdan Oldin Virallikni Biling" },
-      {
-        property: "og:description",
-        content:
-          "AI asosidagi Instagram samaradorlik tahlili: aniq algoritmik ball, soniyalar bo'yicha kamchiliklar va bashorat.",
-      },
+      { property: "og:title", content: "NEXREEL AI — Kadr-ba-Kadr Reels Diagnostikasi" },
     ],
   }),
   component: Landing,
 });
 
-const heroMetrics = [
-  { label: "0-3s Hook Kuchi", score: 92 },
-  { label: "DM Shares (Do'stlarga yuborish)", score: 88 },
-  { label: "To'liq ko'rish (Loop Faktor)", score: 84 },
-  { label: "Vizual sifat & Pacing", score: 90 },
-  { label: "Save & Qimmatli qiymat", score: 79 },
-  { label: "Nisha auditoriyasiga moslik", score: 86 },
-];
+export function Landing() {
+  const navigate = useNavigate();
 
-const audiences = [
-  "Rilskreytorlar",
-  "SMM mutaxassislari",
-  "Biznes egalari",
-  "Mobilograflar",
-  "Ekspertlar",
-  "Agentliklar",
-];
-
-const steps = [
-  { n: "01", title: "Video Yuklash", body: "500MB gacha bo'lgan Reels videongizni bir zumda tashlang." },
-  { n: "02", title: "Meta Algoritm Tahlili", body: "AI 5 ta asosiy ranking drayveri va nishangiz benchmarklari bo'yicha tahlil qiladi." },
-  { n: "03", title: "Virallik Hukmi", body: "Video uchadimi, o'rtacha qoladimi yoki bloklanadimi — aniq xulosani oling." },
-  { n: "04", title: "Tuzatish & Joylash", body: "Soniyalar bo'yicha ko'rsatilgan kamchiliklarni to'g'rilab, maksimal qamrovga erishing." },
-];
-
-const featureGroups = [
-  {
-    icon: Sparkles,
-    title: "Meta 5 Ranking Drayveri",
-    items: [
-      "0-3 soniyalik Hook kuchi",
-      "DM Shares per Reach (Meta #1 faktor)",
-      "Loop & Qayta ko'rish chastotasi",
-      "Save & Qimmatli maslahat qiymati",
-      "Pacing & Har 2s dinamikasi",
-    ],
-  },
-  {
-    icon: Cpu,
-    title: "LiveDune Bozor Benchmarklari",
-    items: [
-      "Nisha bo'yicha o'rtacha ER",
-      "Top 10% viral videolar bilan solishtirish",
-      "Akkauntingiz o'rtacha ko'rishlariga moslash",
-      "Watermark (suv belgisi) jazosi xavfi",
-      "Auditoriya drop-off nuqtalari",
-    ],
-  },
-  {
-    icon: Flame,
-    title: "Aniq Bashorat & Diagnostika",
-    items: [
-      "Kutilayotgan ko'rishlar oralig'i (Views)",
-      "Explore sahifasiga chiqish ehtimoli",
-      "Soniyalar bo'yicha aniq kamchiliklar",
-      "Joylashdan keyingi aniqlikni tekshirish",
-      "PDF hisobot eksport qilish",
-    ],
-  },
-];
-
-function Landing() {
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#070B12] text-foreground selection:bg-cyan-500/30 selection:text-cyan-200">
       <SiteHeader />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-border/70">
-        <div className="halo pointer-events-none absolute inset-0" />
-        <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.25]" />
-        
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6 pb-20 pt-16 md:pt-24">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-cyan-300 backdrop-blur-md shadow-sm">
-              <Zap className="h-3.5 w-3.5 text-cyan-400 animate-pulse" /> Meta Algoritmi & LiveDune Benchmark Dvigateli
-            </span>
-            
-            <h1 className="mt-6 text-4xl font-extrabold leading-[1.08] tracking-tight md:text-6xl lg:text-7xl">
-              Joylashdan Oldin <span className="gradient-text">Virallikni Biling.</span>
-            </h1>
-            
-            <p className="mt-5 text-base sm:text-lg font-medium text-foreground/90 leading-relaxed">
-              Videongiz Explore-ga chiqadimi yoki to'xtab qoladimi? Nashr etishdan oldin aniq bilib oling.
-            </p>
-            
-            <p className="mx-auto mt-3 max-w-2xl text-xs sm:text-sm leading-relaxed text-muted-foreground">
-              NEXREEL AI videongizni <strong>Meta Reels algoritmi (DM Shares, 3s Hook, Loop)</strong> hamda <strong>LiveDune benchmarklari</strong> bilan taqqoslab, soniyalar bo'yicha aniq kamchiliklarni ko'rsatadi.
-            </p>
-
-            <div className="mt-8 flex flex-col items-center justify-center gap-3.5 sm:flex-row">
-              <Button asChild size="lg" className="w-full sm:w-auto shadow-xl shadow-cyan-500/25 font-bold py-6 px-8 text-sm bg-gradient-to-r from-cyan-400 to-emerald-400 hover:opacity-95 text-slate-950">
-                <Link to="/analyze">
-                  Reelsni Tekshirishni Boshlash <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="w-full sm:w-auto border-border/80 text-xs font-semibold py-6 px-6 hover:bg-surface-2">
-                <a href="#how-it-works">Qanday Ishlaydi?</a>
-              </Button>
-            </div>
-          </div>
-
-          {/* Interactive Preview Card */}
-          <div className="animate-rise mt-14 rounded-3xl border border-border/80 bg-surface/60 p-2 shadow-[var(--shadow-elevated)] backdrop-blur-xl">
-            <div className="rounded-2xl border border-border/70 bg-card/90 p-6 md:p-8">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    <Flame className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-foreground">reel_diagnostika_namuna.mp4</p>
-                    <p className="text-[11px] text-muted-foreground font-mono">Davomiyligi: 22s · SMM & Biznes</p>
-                  </div>
-                </div>
-                <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-mono font-bold text-emerald-300">
-                  🚀 UCHADI (92% Virallik)
-                </span>
-              </div>
-
-              <div className="grid gap-8 pt-7 md:grid-cols-[220px_1fr]">
-                <div className="flex flex-col items-center gap-4">
-                  <ScoreRing score={92} size={150} />
-                  <div className="grid w-full grid-cols-3 gap-2 text-center md:grid-cols-1">
-                    <Cell label="Virallik" value="Yuqori" highlight />
-                    <Cell label="Taxminiy ko'rishlar" value="1.8K – 3.6K" />
-                    <Cell label="Ishonch darajasi" value="94%" />
-                  </div>
-                </div>
-                <div className="grid content-start gap-x-8 gap-y-5 sm:grid-cols-2">
-                  {heroMetrics.map((m) => (
-                    <MetricBar key={m.label} label={m.label} score={m.score} suffix="%" />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Target Audiences */}
-      <section className="border-b border-border/70 py-12 bg-surface/30">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 text-center">
-          <p className="text-xs uppercase font-mono tracking-widest text-muted-foreground font-semibold">
-            Kimlar uchun mo'ljallangan?
-          </p>
-          <div className="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-6">
-            {audiences.map((a) => (
-              <div
-                key={a}
-                className="rounded-xl border border-border/70 bg-card/60 px-3.5 py-3 text-xs font-semibold text-foreground/80 hover:border-cyan-500/40 hover:text-cyan-300 transition-colors"
-              >
-                {a}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section id="how-it-works" className="border-b border-border/70 py-16 md:py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <span className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400">Oddiy & Tezkor</span>
-            <h2 className="mt-2 text-2xl font-bold md:text-4xl">Qanday ishlaydi?</h2>
-            <p className="mt-2 text-xs text-muted-foreground">4 oddiy qadamda videongizni maksimal natijaga tayyorlang</p>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-            {steps.map((s) => (
-              <div key={s.n} className="surface-card p-6 relative group hover:border-cyan-500/40 transition-all">
-                <span className="font-mono text-sm font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/20">{s.n}</span>
-                <h3 className="mt-4 text-base font-bold text-foreground">{s.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{s.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Groups */}
-      <section className="border-b border-border/70 py-16 md:py-20 bg-surface/20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-2xl font-bold md:text-4xl">
-              Bitta Reels. 5 ta Algoritm Drayveri. Aniq Natija.
-            </h2>
-          </div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {featureGroups.map((g) => (
-              <div key={g.title} className="surface-card p-6 hover:border-cyan-500/30 transition-all">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-400">
-                  <g.icon className="h-5 w-5" />
-                </div>
-                <h3 className="mt-4 text-sm font-bold text-foreground">
-                  {g.title}
-                </h3>
-                <ul className="mt-4 space-y-2.5 text-xs text-muted-foreground">
-                  {g.items.map((i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                      <span className="text-foreground/90">{i}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom CTA */}
-      <section className="py-20 relative overflow-hidden">
+      {/* Hero Section — Ultra-Compact & High Impact */}
+      <section className="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-20">
         <div className="halo pointer-events-none absolute inset-0 opacity-40" />
-        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 text-center">
-          <h2 className="text-3xl font-extrabold md:text-5xl tracking-tight">Taxmin qilishni to'xtating.</h2>
-          <p className="mt-3 text-sm text-muted-foreground max-w-md mx-auto">
-            Instagram Reels algoritmi bo'yicha videolaringizni professional darajada tekshiring.
-          </p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button asChild size="lg" className="w-full sm:w-auto shadow-xl shadow-cyan-500/25 font-bold py-6 px-8 text-sm bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950">
-              <Link to="/analyze">Birinchi Videoni Tahlil Qilish</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto text-xs font-semibold py-6 px-6">
-              <Link to="/pricing">Tariflar & Obuna</Link>
-            </Button>
+        <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.18]" />
+
+        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            
+            {/* Left Content */}
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/40 px-3.5 py-1 text-[11px] font-mono font-semibold text-cyan-300 backdrop-blur-md">
+                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>NEYRON KADR-BA-KADR AUDIT DASTURI</span>
+              </div>
+
+              <h1 className="mt-5 text-3xl font-black leading-[1.1] tracking-tight sm:text-4xl md:text-5xl lg:text-[52px]">
+                Reels xatolarini <br />
+                <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                  soniyalar va kadrlar bo'yicha
+                </span> <br />
+                aniq ko'ring.
+              </h1>
+
+              <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl">
+                Videongiz nima sababdan to'xtab qolishini joylashdan oldin biling. Algoritm aynan qaysi soniyada jazolayotganini kadr skrinshoti va to'liq yechimi bilan oling.
+              </p>
+
+              {/* Direct Quick Dropzone CTA */}
+              <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-extrabold py-6 px-7 text-sm shadow-xl shadow-cyan-500/20 hover:opacity-95"
+                >
+                  <Link to="/analyze">
+                    <Upload className="mr-2 h-4 w-4" /> Videoni Tekshirish (500MB) <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-border/80 text-xs font-semibold py-6 px-5 hover:bg-surface-2"
+                >
+                  <Link to="/accounts">
+                    Akkaunt Ulash
+                  </Link>
+                </Button>
+              </div>
+
+              <div className="mt-8 flex items-center gap-6 text-[11px] font-mono text-muted-foreground">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Kadr skrinshoti</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />
+                  <span>Meta 5-Drayver</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Aniq Yechim</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Visual Frame Inspector Simulation Card */}
+            <div className="relative">
+              <div className="rounded-2xl border border-cyan-500/30 bg-slate-950/90 p-4 shadow-2xl shadow-cyan-500/10 backdrop-blur-2xl">
+                
+                {/* Visual Video Frame Preview Box */}
+                <div className="relative overflow-hidden rounded-xl border border-border/80 bg-slate-900 aspect-[16/10] flex flex-col justify-between p-3">
+                  <div className="flex items-center justify-between z-10">
+                    <span className="rounded bg-black/70 px-2 py-0.5 font-mono text-[10px] font-bold text-cyan-400 border border-cyan-500/30">
+                      ⏱ 00:04.2s (KADR SKRINSHOTI)
+                    </span>
+                    <span className="rounded-full bg-rose-500/20 px-2 py-0.5 text-[9px] font-bold text-rose-400 border border-rose-500/40">
+                      ❌ XATOLIK ANIQLANDI
+                    </span>
+                  </div>
+
+                  {/* Red Targeted Bounding Box for the exact flaw */}
+                  <div className="my-auto mx-auto w-4/5 rounded-lg border-2 border-dashed border-rose-500/80 bg-rose-500/10 p-3 text-center backdrop-blur-sm">
+                    <p className="text-[11px] font-bold text-rose-300">
+                      [XATOLIK HUDUDI: 00:04s]
+                    </p>
+                    <p className="mt-1 text-[10px] text-foreground/90 font-medium">
+                      Statik pauza: 1.8 soniya davomida vizual dinamika yo'q
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[9px] font-mono text-muted-foreground z-10">
+                    <span>AUDITORIYA DROP-OFF XAVFI: 42%</span>
+                    <span className="text-emerald-400 font-bold">YECHIM: +1.2s B-ROLL</span>
+                  </div>
+                </div>
+
+                {/* Instant Diagnostics Card under Frame */}
+                <div className="mt-3.5 space-y-2 rounded-xl border border-border/60 bg-surface/60 p-3">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-foreground">Algoritmik Xulosa:</span>
+                    <span className="font-mono font-bold text-cyan-400">92 / 100 (UCHADI)</span>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    00:04 dagi statik pauza bartaraf etilsa, to'liq ko'rish (retention) darajasi <strong>78% dan 91% gacha</strong> ko'tariladi.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 3 Core Pillars — Compact & Punchy */}
+      <section className="border-t border-border/70 py-12 bg-surface/20">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid gap-4 sm:grid-cols-3">
+            
+            <div className="surface-card p-5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <Scan className="h-4 w-4" />
+              </div>
+              <h3 className="mt-3 text-sm font-bold text-foreground">Kadr-ba-Kadr Skrinshot</h3>
+              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                Aynan qaysi soniya va kadrda xatolik borligini vizual ko'rsatadi.
+              </p>
+            </div>
+
+            <div className="surface-card p-5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <Zap className="h-4 w-4" />
+              </div>
+              <h3 className="mt-3 text-sm font-bold text-foreground">Meta 5-Drayver Formulalari</h3>
+              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                DM Shares, Loop, Hook va Pacing bo'yicha 100% aniq algoritmik tahlil.
+              </p>
+            </div>
+
+            <div className="surface-card p-5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <CheckCircle2 className="h-4 w-4" />
+              </div>
+              <h3 className="mt-3 text-sm font-bold text-foreground">Aniq Tuzatish Rejasi</h3>
+              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                Har bir kamchilik uchun aniq va amaliy tavsiyalar beriladi.
+              </p>
+            </div>
+
           </div>
         </div>
       </section>
 
       <SiteFooter />
-    </div>
-  );
-}
-
-function Cell({ label, value, highlight = false }: { label: string; value: string; highlight?: boolean }) {
-  return (
-    <div className="rounded-xl border border-border/70 bg-surface/50 p-2.5">
-      <p className="text-[10px] uppercase font-mono tracking-wider text-muted-foreground">{label}</p>
-      <p className={`mt-0.5 text-xs font-bold ${highlight ? "text-cyan-400" : "text-foreground"}`}>{value}</p>
     </div>
   );
 }
