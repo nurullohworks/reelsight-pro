@@ -21,6 +21,9 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ReportsIndexRouteImport } from './routes/reports.index'
 import { Route as ReportsIdRouteImport } from './routes/reports.$id'
+import { Route as SrcRoutesAccountsRouteImport } from './routes/src/routes/accounts'
+import { Route as SrcRoutesAnalyzeRouteImport } from './routes/src/routes/analyze'
+import { Route as SrcRoutesPricingRouteImport } from './routes/src/routes/pricing'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +85,21 @@ const ReportsIdRoute = ReportsIdRouteImport.update({
   path: '/reports/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SrcRoutesAccountsRoute = SrcRoutesAccountsRouteImport.update({
+  id: '/src/routes/accounts',
+  path: '/src/routes/accounts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SrcRoutesAnalyzeRoute = SrcRoutesAnalyzeRouteImport.update({
+  id: '/src/routes/analyze',
+  path: '/src/routes/analyze',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SrcRoutesPricingRoute = SrcRoutesPricingRouteImport.update({
+  id: '/src/routes/pricing',
+  path: '/src/routes/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,6 +114,9 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/reports/$id': typeof ReportsIdRoute
   '/reports/': typeof ReportsIndexRoute
+  '/src/routes/accounts': typeof SrcRoutesAccountsRoute
+  '/src/routes/analyze': typeof SrcRoutesAnalyzeRoute
+  '/src/routes/pricing': typeof SrcRoutesPricingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,6 +131,9 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/reports/$id': typeof ReportsIdRoute
   '/reports': typeof ReportsIndexRoute
+  '/src/routes/accounts': typeof SrcRoutesAccountsRoute
+  '/src/routes/analyze': typeof SrcRoutesAnalyzeRoute
+  '/src/routes/pricing': typeof SrcRoutesPricingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,6 +149,9 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/reports/$id': typeof ReportsIdRoute
   '/reports/': typeof ReportsIndexRoute
+  '/src/routes/accounts': typeof SrcRoutesAccountsRoute
+  '/src/routes/analyze': typeof SrcRoutesAnalyzeRoute
+  '/src/routes/pricing': typeof SrcRoutesPricingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +168,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/reports/$id'
     | '/reports/'
+    | '/src/routes/accounts'
+    | '/src/routes/analyze'
+    | '/src/routes/pricing'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +185,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/reports/$id'
     | '/reports'
+    | '/src/routes/accounts'
+    | '/src/routes/analyze'
+    | '/src/routes/pricing'
   id:
     | '__root__'
     | '/'
@@ -169,6 +202,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/reports/$id'
     | '/reports/'
+    | '/src/routes/accounts'
+    | '/src/routes/analyze'
+    | '/src/routes/pricing'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,6 +220,9 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   ReportsIdRoute: typeof ReportsIdRoute
   ReportsIndexRoute: typeof ReportsIndexRoute
+  SrcRoutesAccountsRoute: typeof SrcRoutesAccountsRoute
+  SrcRoutesAnalyzeRoute: typeof SrcRoutesAnalyzeRoute
+  SrcRoutesPricingRoute: typeof SrcRoutesPricingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -272,6 +311,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/src/routes/accounts': {
+      id: '/src/routes/accounts'
+      path: '/src/routes/accounts'
+      fullPath: '/src/routes/accounts'
+      preLoaderRoute: typeof SrcRoutesAccountsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/src/routes/analyze': {
+      id: '/src/routes/analyze'
+      path: '/src/routes/analyze'
+      fullPath: '/src/routes/analyze'
+      preLoaderRoute: typeof SrcRoutesAnalyzeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/src/routes/pricing': {
+      id: '/src/routes/pricing'
+      path: '/src/routes/pricing'
+      fullPath: '/src/routes/pricing'
+      preLoaderRoute: typeof SrcRoutesPricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -288,6 +348,9 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   ReportsIdRoute: ReportsIdRoute,
   ReportsIndexRoute: ReportsIndexRoute,
+  SrcRoutesAccountsRoute: SrcRoutesAccountsRoute,
+  SrcRoutesAnalyzeRoute: SrcRoutesAnalyzeRoute,
+  SrcRoutesPricingRoute: SrcRoutesPricingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

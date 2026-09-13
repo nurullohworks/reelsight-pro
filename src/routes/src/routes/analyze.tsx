@@ -9,7 +9,7 @@ import { formatNumber, useAppStore } from "@/lib/app-store";
 import { ANALYSIS_STEPS, LIVEDUNE_NICHES, videoAnalysisService } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/analyze")({
+export const Route = createFileRoute("/src/routes/analyze")({
   head: () => ({
     meta: [
       { title: "Meta & LiveDune Algoritmik Tahlil вЂ” REELPREDICT" },
