@@ -3,10 +3,14 @@ import { cn } from "@/lib/utils";
 
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <div className={cn("relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-400 p-0.5 shadow-lg shadow-cyan-500/20", className)}>
-      <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-background/90 backdrop-blur-sm">
-        <svg viewBox="0 0 24 24" className="h-4 w-4 fill-none stroke-cyan-400 stroke-[2.5]" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" className="fill-cyan-400/20" />
+    <div className={cn("cyber-prism relative flex h-9 w-9 items-center justify-center", className)}>
+      <div className="cyber-prism__frame absolute inset-0" />
+      <div className="cyber-prism__core relative flex h-7 w-7 items-center justify-center bg-background/90">
+        <svg viewBox="0 0 32 32" className="h-5 w-5 fill-none" aria-hidden="true">
+          <path d="M16 3 28 10v12l-12 7L4 22V10L16 3Z" className="stroke-primary" strokeWidth="1.5" />
+          <path d="m16 3 4.5 12.5L16 29l-4.5-13.5L16 3Z" className="fill-primary/20 stroke-primary" strokeWidth="1.2" />
+          <path d="m4 10 7.5 5.5L4 22m24-12-7.5 5.5L28 22" className="stroke-signal" strokeWidth="1.2" />
+          <circle cx="16" cy="16" r="2" className="fill-foreground" />
         </svg>
       </div>
     </div>
@@ -25,16 +29,16 @@ export function Logo({
       <LogoMark />
       <div className="flex flex-col leading-none">
         <div className="flex items-center gap-1.5">
-          <span className="text-base font-extrabold tracking-tight text-foreground group-hover:text-primary transition-colors">
+          <span className="font-display text-base font-extrabold text-foreground transition-colors group-hover:text-primary">
             NEXREEL
           </span>
-          <span className="rounded-md bg-gradient-to-r from-cyan-500/20 to-emerald-500/20 px-1.5 py-0.5 text-[10px] font-mono font-bold text-cyan-400 border border-cyan-500/30">
+          <span className="border border-primary/40 bg-primary/10 px-1.5 py-0.5 text-[9px] font-mono font-bold text-primary">
             AI
           </span>
         </div>
         {withTagline ? (
           <span className="mt-1 text-[11px] text-muted-foreground font-medium">
-            Meta Reels Algoritmi & Virallik Diagnostikasi
+            Instagram signallari bo‘yicha aniq tahlil
           </span>
         ) : null}
       </div>
