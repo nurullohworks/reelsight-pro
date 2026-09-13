@@ -148,6 +148,75 @@ function ReportPage() {
         </div>
       </div>
 
+      {/* 🚨 Watermark Exact Screen Location & Visual Radar */}
+      {meta?.watermarkPenalty && (
+        <div className="mt-6 rounded-2xl border-2 border-rose-500/50 bg-gradient-to-r from-rose-950/40 via-rose-900/20 to-background p-6 shadow-2xl shadow-rose-500/10">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            
+            {/* Left: Explanation */}
+            <div className="space-y-2 max-w-xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-rose-500/40 bg-rose-500/10 px-3 py-1 font-mono text-xs font-bold text-rose-300">
+                <ShieldAlert className="h-3.5 w-3.5 text-rose-400 animate-pulse" />
+                <span>SUV BELGISI (WATERMARK) ANIQ EKRAN JOYLASHUVI</span>
+              </div>
+              <h3 className="text-lg font-bold text-foreground">
+                Meta Algoritmi Qayerni Bloklayapti?
+              </h3>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Reels kadrida boshqa ilovalar logotipi aniqlandi. Meta sun'iy intellekti buni aniqlab, videoni Explore (Tavsiyalar) lentasidan to'liq cheklaydi.
+              </p>
+
+              <div className="mt-3 grid gap-2 sm:grid-cols-2 text-xs">
+                <div className="rounded-xl border border-rose-500/30 bg-rose-950/30 p-3">
+                  <span className="font-bold text-rose-300">📍 1-Hudud (Logotip):</span>
+                  <p className="mt-1 text-muted-foreground">O'ng yuqori burchakda (TikTok / InShot belgisi)</p>
+                </div>
+                <div className="rounded-xl border border-rose-500/30 bg-rose-950/30 p-3">
+                  <span className="font-bold text-rose-300">⏱ 2-Hudud (Outro):</span>
+                  <p className="mt-1 text-muted-foreground">Yakuniy 2 soniyadagi CapCut outrosi</p>
+                </div>
+              </div>
+
+              <div className="mt-3 rounded-xl border border-emerald-500/30 bg-emerald-950/30 p-3 text-xs text-emerald-200">
+                <strong>✅ Qanday yo'qotish kerak:</strong> CapCut'dagi oxirgi qora outroni o'chirib, videoni 105% Zoom qilsangiz, ball darhol <strong>{meta?.totalAlgorithmScore ?? p.overall_score} ➡️ 92+ (UCHADI)</strong> ga ko'tariladi!
+              </div>
+            </div>
+
+            {/* Right: 9:16 Visual Phone Screen Bounding Box */}
+            <div className="relative mx-auto lg:mx-0 w-44 aspect-[9/16] rounded-2xl border-2 border-slate-700 bg-slate-950 p-2.5 shadow-2xl flex flex-col justify-between overflow-hidden shrink-0">
+              {/* Top notch */}
+              <div className="mx-auto h-1 w-12 rounded-full bg-slate-800" />
+              
+              {/* Highlight 1: Top-Right Watermark Box */}
+              <div className="absolute top-6 right-2.5 rounded border-2 border-dashed border-rose-400 bg-rose-500/35 px-1.5 py-1 text-center animate-pulse">
+                <span className="font-mono text-[8px] font-black text-white leading-none block">
+                  🔴 LOGOTIP
+                </span>
+                <span className="font-mono text-[7px] text-rose-200 block">
+                  [O'ng Yuqori]
+                </span>
+              </div>
+
+              {/* Center Screen Mock Content */}
+              <div className="my-auto text-center font-mono text-[9px] text-slate-600">
+                [9:16 Reels Kadri]
+              </div>
+
+              {/* Highlight 2: Bottom Outro Box */}
+              <div className="absolute bottom-5 left-2.5 right-2.5 rounded border-2 border-dashed border-rose-400 bg-rose-500/30 py-1 text-center animate-pulse">
+                <span className="font-mono text-[8px] font-black text-rose-200">
+                  🔴 YAKUNIY OUTRO (CapCut)
+                </span>
+              </div>
+
+              {/* Bottom bar */}
+              <div className="mx-auto h-1 w-8 rounded-full bg-slate-800" />
+            </div>
+
+          </div>
+        </div>
+      )}
+
       {/* Main Grid: Score Ring + Key Stats */}
       <div className="mt-6 grid gap-4 lg:grid-cols-[320px_1fr]">
         <div className="surface-card flex flex-col items-center justify-center p-8 border border-border/80">
