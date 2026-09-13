@@ -33,7 +33,7 @@ import { Label } from "@/components/ui/label";
 import { formatNumber, useAppStore } from "@/lib/app-store";
 import { LIVEDUNE_NICHES } from "@/lib/services";
 
-export const Route = createFileRoute("/accounts")({
+export const Route = createFileRoute("/src/routes/accounts")({
   head: () => ({
     meta: [
       { title: "Instagram Akkaunt Ulash & Tahlili вЂ” REELPREDICT" },

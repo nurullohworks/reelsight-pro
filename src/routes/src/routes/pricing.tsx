@@ -9,7 +9,7 @@ import type { PlanId } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { PaymentModal } from "@/components/app/PaymentModal";
 
-export const Route = createFileRoute("/pricing")({
+export const Route = createFileRoute("/src/routes/pricing")({
   head: () => ({
     meta: [
       { title: "Narxlar вЂ” REELPREDICT" },
