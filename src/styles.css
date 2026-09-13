@@ -150,80 +150,64 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
-  }
-
-  h1,
-  h2,
-  h3 {
-    letter-spacing: -0.03em;
+    min-height: 100vh;
+    overflow-x: hidden;
+    letter-spacing: -0.011em;
   }
 }
 
-@utility surface-card {
-  background-image: var(--gradient-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-}
-
-@utility glass-card {
-  background: color-mix(in oklab, var(--surface) 75%, transparent);
-  backdrop-filter: blur(16px);
-  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
-  border-radius: var(--radius-xl);
-}
-
-@utility gradient-text {
+.gradient-text {
   background-image: var(--gradient-primary);
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 
-@utility grid-lines {
-  background-image:
-    linear-gradient(to right, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in oklab, var(--border) 60%, transparent) 1px, transparent 1px);
-  background-size: 56px 56px;
+.surface-card {
+  background-color: color-mix(in oklab, var(--color-card) 92%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  backdrop-filter: blur(12px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@utility halo {
-  background-image: var(--gradient-halo);
+.surface-card:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: 0 8px 30px -12px color-mix(in oklab, var(--primary) 20%, transparent);
 }
 
-@keyframes rp-rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+.glow-card {
+  position: relative;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-glow);
 }
 
-@utility animate-rise {
-  animation: rp-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+.grid-lines {
+  background-image: linear-gradient(to right, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
-@keyframes rp-shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+.halo {
+  background: var(--gradient-halo);
 }
 
-@utility shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in oklab, var(--primary) 28%, transparent) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: rp-shimmer 1.6s linear infinite;
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
